@@ -1,0 +1,30 @@
+import ServiceCard from "@/app/components/ServiceCard";
+import Layout from "../app/components/Layout";
+
+import PricingServices from "@/app/components/PricingServices";
+import FAQ from "@/app/components/FAQ";
+import ContactCTA from "@/app/components/ContactCTA";
+import RecommendedBrokers from "@/app/components/RecommendedBrokers";
+import Hero from "@/app/components/Hero";
+import OurServices from "@/app/components/OurServices";
+import AboutSection from "@/app/components/AboutSection";
+
+export default function Home() {
+  return (
+    <Layout>
+      <Hero />
+
+      <AboutSection />
+
+      <OurServices />
+
+      <PricingServices />
+
+      <RecommendedBrokers />
+
+      <FAQ />
+
+      <ContactCTA />
+    </Layout>
+  );
+}
