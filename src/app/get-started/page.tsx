@@ -1,19 +1,17 @@
 "use client";
 
 import { useTheme } from "next-themes";
+import { useParams } from "next/navigation";
+import { Service, services } from "@/data/services";
 import Button from "@/app/components/Button";
 
-interface Service {
-  title: string;
-  description: string;
-  price: string;
-  originalPrice?: string;
-  features: string[];
-}
-
-export default function GetStartedPage({ service }: { service: Service }) {
+export default function GetStartedPage({  title, description, price, originalPrice, features }: Service) {
   const { theme } = useTheme();
 
+  // const service = services[title as keyof typeof services];
+
+  console.log("Services: " + { title, description, price, originalPrice, features });
+  
   const headingColor = theme === "dark" ? "text-white" : "text-gray-900";
   const textColor = theme === "dark" ? "text-gray-300" : "text-gray-700";
   const cardBg =
@@ -29,31 +27,26 @@ export default function GetStartedPage({ service }: { service: Service }) {
     >
       <div className={`max-w-2xl w-full rounded-3xl p-10 ${cardBg}`}>
         <h1 className={`text-4xl font-bold mb-6 ${headingColor}`}>
-          {service.title}
+          {title}
         </h1>
-        <p className={`mb-6 ${textColor}`}>{service.description}</p>
+        <p className={`mb-6 ${textColor}`}>{description}</p>
 
         <ul className={`space-y-3 mb-8 ${textColor}`}>
-          {service.features.map((feature, idx) => (
+          {features.map((feature: string, idx: number) => (
             <li key={idx}>✅ {feature}</li>
           ))}
         </ul>
 
         <div className="flex items-center justify-between mb-8">
-          {service.originalPrice && (
+          {originalPrice && (
             <span className={`line-through ${textColor}`}>
-              {service.originalPrice}
+              {originalPrice}
             </span>
           )}
-          <span className="text-3xl font-bold text-blue-500">
-            {service.price}
-          </span>
+          <span className="text-3xl font-bold text-blue-500">{price}</span>
         </div>
 
-        <Button
-          onClick={() => alert(`Redirect to payment for ${service.title}`)}
-          className="w-full"
-        >
+        <Button onClick={() => alert(`Redirect to payment for ${title}`)} className="w-full">
           Proceed to Payment
         </Button>
       </div>

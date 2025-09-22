@@ -3,28 +3,39 @@
 import { ElementType } from "react";
 import { useTheme } from "next-themes";
 import ServiceCard from "./ServiceCard";
-import { services } from "@/data/services";
+import {
+  CurrencyDollarIcon,
+  ComputerDesktopIcon,
+  UserGroupIcon,
+} from "@heroicons/react/24/solid";
 
-interface Service {
-  id: string;
-  title: string;
-  description: string;
-  icon?: ElementType | null;
-  link?: string;
-  image?: string;
-}
+const services = [
+  {
+    title: "Mentorship Program",
+    description: "Step-by-step guidance to take you from beginner to pro trader with price action, supply & demand, and mindset training.",
+    link: "/mentorship",
+    icon: UserGroupIcon,
+  },
+  {
+    title: "Signals & Bots",
+    description: "Get access to high-quality trading signals and market insights delivered directly to your Telegram group.",
+    link: "/signals",
+    icon: CurrencyDollarIcon,
+  },
+  {
+    title: "Educational Resources",
+    description: "Free guides, articles, and resources to sharpen your trading edge and keep you updated with market trends.",
+    link: "/resources",
+    icon: ComputerDesktopIcon, // represents automation / bots
+  },
+];
+
 
 export default function OurServices() {
   const { theme } = useTheme();
 
   const sectionBg = theme === "dark" ? "bg-gray-700" : "bg-white";
   const headingColor = theme === "dark" ? "text-white" : "text-gray-900";
-
-  // Convert services object to array with id
-  const servicesArray: Service[] = Object.entries(services).map(([id, service]) => ({
-    id,
-    ...service,
-  }));
 
   return (
     <section
@@ -36,15 +47,13 @@ export default function OurServices() {
           Our Services
         </h2>
 
-        <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
-          {servicesArray.map((service) => (
+        <div className="grid gap-8 md:grid-cols-3">
+          {services.map((service) => (
             <ServiceCard
-              key={service.id}
               title={service.title}
               description={service.description}
               icon={service.icon}
               link={service.link}
-              image={service.image}
             />
           ))}
         </div>

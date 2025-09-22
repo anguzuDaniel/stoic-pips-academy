@@ -7,15 +7,23 @@ import {
   ComputerDesktopIcon,
   UserGroupIcon,
 } from "@heroicons/react/24/solid";
+import { ElementType } from "react";
 
-export const services: Record<string, any> = {
+export interface Service {
+  title: string;
+  description: string;
+  price: string;
+  originalPrice?: string;
+  features: string[];
+}
+
+export const services: Record<string, Service> = {
   "group-mentorship": {
     title: "Group Mentorship",
     description:
       "Structured trading guidance from beginner to pro with group sessions.",
     price: "$100",
     originalPrice: "$299",
-    icon: UserGroupIcon, // represents group learning
     features: [
       "Weekly Zoom Mentorship",
       "Lifetime Access",
@@ -28,7 +36,6 @@ export const services: Record<string, any> = {
     description: "Personalized one-on-one training with Daniel Anguzu.",
     price: "$300",
     originalPrice: "$499",
-    icon: AcademicCapIcon, // represents personal learning / coaching
     features: [
       "Private Sessions",
       "Signals",
@@ -36,12 +43,11 @@ export const services: Record<string, any> = {
       "Custom Strategy Guidance",
     ],
   },
-  signals: {
+  "signals": {
     title: "Signals",
     description: "High-probability trading signals for Forex & Indices.",
     price: "$20/month",
     originalPrice: "$50/month",
-    icon: CurrencyDollarIcon,
     features: [
       "Daily Signals",
       "Synthetic Indices",
@@ -55,7 +61,6 @@ export const services: Record<string, any> = {
       "We manage your account with professional low-risk strategies.",
     price: "$500",
     originalPrice: "$699",
-    icon: WalletIcon,
     features: ["Full Management", "Low-Risk Strategy", "Weekly Reports"],
   },
   "robot-building": {
@@ -63,7 +68,6 @@ export const services: Record<string, any> = {
     description: "Custom robots designed & backtested for your strategy.",
     price: "$600",
     originalPrice: "$1499",
-    icon: ComputerDesktopIcon, // represents automation / bots
     features: [
       "Custom Bot Design",
       "Backtested Strategy",
