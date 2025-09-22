@@ -3,29 +3,7 @@
 import { useState } from "react";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
 import { useTheme } from "next-themes";
-
-const faqs = [
-  {
-    question: "What platforms do you provide mentorship for?",
-    answer: "We focus on synthetic indices like VIX 50 and forex pairs such as XAU/USD and GBP/JPY.",
-  },
-  {
-    question: "Can I purchase only one service?",
-    answer: "Yes! You can choose individual services like Signals, Account Management, or Robot Building based on your needs.",
-  },
-  {
-    question: "Do you provide funded account preparation?",
-    answer: "Absolutely. Our Pro and mentorship plans include funded account prep and personalized guidance.",
-  },
-  {
-    question: "What payment methods do you accept?",
-    answer: "We accept most major payment methods including credit/debit cards, PayPal, and cryptocurrency for international clients.",
-  },
-  {
-    question: "Is there a refund policy?",
-    answer: "Refunds depend on the service purchased. Mentorship and custom services have specific terms which are explained before purchase.",
-  },
-];
+import { faqs } from "@/data/faq";
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -37,7 +15,7 @@ export default function FAQ() {
 
   const sectionBg = theme === "dark" ? "bg-gray-700" : "bg-white";
   const headingColor = theme === "dark" ? "text-white" : "text-gray-900";
-  const textColor = theme === "dark" ? "text-gray-300" : "text-gray-700";
+  const textColor = theme === "dark" ? "text-gray-300" : "text-gray-900";
   const cardBg = theme === "dark" ? "bg-black/20" : "bg-white/30";
   const borderColor = theme === "dark" ? "border-white/10" : "border-gray-300";
 
