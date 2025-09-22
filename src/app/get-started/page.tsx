@@ -8,8 +8,6 @@ import Button from "@/app/components/Button";
 export default function GetStartedPage({  title, description, price, originalPrice, features }: Service) {
   const { theme } = useTheme();
 
-  // const service = services[title as keyof typeof services];
-
   console.log("Services: " + { title, description, price, originalPrice, features });
   
   const headingColor = theme === "dark" ? "text-white" : "text-gray-900";
