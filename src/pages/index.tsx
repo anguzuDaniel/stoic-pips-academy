@@ -8,6 +8,7 @@ import RecommendedBrokers from "@/app/components/RecommendedBrokers";
 import Hero from "@/app/components/Hero";
 import OurServices from "@/app/components/OurServices";
 import AboutSection from "@/app/components/AboutSection";
+import TestimonialsSection from "@/app/components/TestimonialsSection";
 
 export default function Home() {
   return (
@@ -21,6 +22,8 @@ export default function Home() {
       <PricingServices />
 
       <RecommendedBrokers />
+
+      <TestimonialsSection />
 
       <FAQ />
 

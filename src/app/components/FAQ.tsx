@@ -35,7 +35,7 @@ export default function FAQ() {
     setOpenIndex(openIndex === index ? null : index);
   };
 
-  const sectionBg = theme === "dark" ? "bg-gray-800" : "bg-white";
+  const sectionBg = theme === "dark" ? "bg-gray-700" : "bg-white";
   const headingColor = theme === "dark" ? "text-white" : "text-gray-900";
   const textColor = theme === "dark" ? "text-gray-300" : "text-gray-700";
   const cardBg = theme === "dark" ? "bg-black/20" : "bg-white/30";

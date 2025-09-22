@@ -16,6 +16,15 @@ export default function Footer() {
     <footer
       className={`${bgColor} backdrop-blur-3xl border-t ${borderColor} py-8 mt-24 transition-colors duration-500`}
     >
+            {/* Background Image */}
+      <div className="absolute inset-0 pointer-events-none">
+        <img
+          src="/noise.png"
+          alt="Background Noise"
+          className="w-full h-full object-cover opacity-10"
+        />
+      </div>
+      
       <div className={`max-w-6xl mx-auto px-4 sm:px-6 md:px-8 flex flex-col md:flex-row items-center justify-between transition-colors duration-500 ${textColor}`}>
         {/* Logo / Brand */}
         <div className="mb-6 md:mb-0 text-center md:text-left">

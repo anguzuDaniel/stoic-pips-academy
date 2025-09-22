@@ -2,6 +2,7 @@
 
 import { Playfair_Display } from "next/font/google";
 import { useTheme } from "next-themes";
+import BackgroundOverlay from "./BackgroundOverlay";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -16,20 +17,11 @@ export default function Hero() {
       className={`relative h-screen flex items-center overflow-hidden transition-colors duration-500
         ${
           theme === "dark"
-            ? "bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700"
-            : "bg-gradient-to-br from-white via-gray-50 to-gray-100"
+            ? "bg-gradient-to-b from-gray-900 via-gray-800 to-gray-700"
+            : "bg-gradient-to-b from-white via-gray-50 to-gray-100"
         }`}
     >
-      {/* Background Image Overlay */}
-      <div
-        className={`absolute inset-0 bg-cover bg-center pointer-events-none transition-opacity duration-500
-          ${theme === "dark" ? "bg-[url('/hero_background_1.svg')] opacity-20" : "bg-[url('/image.png')] opacity-10"}`}
-      ></div>
-
-      <div
-        className={`absolute inset-0 bg-cover bg-center pointer-events-none transition-opacity duration-500
-          ${theme === "dark" ? "bg-[url('/hero_background_2.svg')] opacity-20" : "bg-[url('/image.png')] opacity-10"}`}
-      ></div>
+      <BackgroundOverlay />
 
       {/* Hero content */}
       <div className="relative z-10 max-w-4xl mx-auto px-6 md:px-16 flex flex-col items-center justify-center text-center transition-colors duration-500">
@@ -73,7 +65,7 @@ export default function Hero() {
 
         {/* CTA */}
         <a
-          href="#mentorship"
+          href="/mentorship"
           className={`px-8 py-4 rounded-2xl font-semibold text-white shadow-lg transition-all
             ${
               theme === "dark"

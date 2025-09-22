@@ -8,12 +8,25 @@ export default function PricingServices() {
 
   const services = [
     {
-      title: "Mentorship",
+      title: "Group Mentorship",
       description: "Structured trading guidance from beginner to pro.",
-      price: "$199",
+      price: "$100",
+      originalPrice: "$299",
+      features: [
+        "Zoom Mentorship",
+        "Lifetime Access",
+        "Price Action Mastery",
+        "Supply & Demand Training",
+      ],
+    },
+      {
+      title: "1-on-1 Mentorship",
+      description: "Structured trading guidance from beginner to pro.",
+      price: "$300",
       originalPrice: "$299",
       features: [
         "1-on-1 Mentorship",
+        "Signals",
         "Lifetime Access",
         "Price Action Mastery",
         "Supply & Demand Training",
@@ -21,12 +34,13 @@ export default function PricingServices() {
     },
     {
       title: "Signals",
-      description: "High-probability trade signals for VIX 50 and forex pairs.",
-      price: "$99",
-      originalPrice: "$149",
+      description: "High-probability trade signals.",
+      price: "$20/Monthly",
+      originalPrice: "$50/Monthly",
       features: [
         "Daily Signals",
-        "VIX 50 + Forex Pairs",
+        "Sythentic indices",
+        "Forex Pairs",
         "Risk Management Tips",
         "Telegram Group Access",
       ],
@@ -34,7 +48,7 @@ export default function PricingServices() {
     {
       title: "Account Management",
       description: "We manage your account with professional risk strategies.",
-      price: "$499",
+      price: "$500",
       originalPrice: "$699",
       features: [
         "Full Account Management",
@@ -46,8 +60,8 @@ export default function PricingServices() {
     {
       title: "Robot Building",
       description: "Custom trading robots built for your strategy.",
-      price: "$299",
-      originalPrice: "$399",
+      price: "$600",
+      originalPrice: "$1499",
       features: [
         "Custom Bot Design",
         "Backtested Strategy",

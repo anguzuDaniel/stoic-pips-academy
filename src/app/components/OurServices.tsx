@@ -18,8 +18,8 @@ export default function OurServices() {
       id="services"
       className={`py-20 px-4 sm:px-6 md:px-8 relative transition-colors duration-500 ${sectionBg}`}
     >
-      {/* Optional subtle background overlay */}
-      <div className={`absolute inset-0 bg-gradient-to-b ${overlayFrom} ${overlayTo} pointer-events-none rounded-3xl`}></div>
+      {/* Optional subtle background overlay
+      <div className={`absolute inset-0 bg-gradient-to-b ${overlayFrom} ${overlayTo} pointer-events-none rounded-3xl`}></div> */}
 
       <div className="relative max-w-6xl mx-auto text-center">
         {/* Section Title */}

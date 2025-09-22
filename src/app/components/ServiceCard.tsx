@@ -21,7 +21,7 @@ export default function ServiceCard({ title, description, icon: Icon, link, imag
   const iconColor = theme === "dark" ? "text-white" : "text-gray-900";
 
   // Card background based on theme
-  const cardBg = theme === "dark" ? "bg-black/10" : "bg-white/10";
+  const cardBg = theme === "dark" ? "bg-black/10" : "bg-white/30";
   const borderColor = theme === "dark" ? "border-white/20" : "border-gray-200";
 
   return (

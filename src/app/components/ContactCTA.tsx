@@ -13,21 +13,13 @@ export default function ContactCTA() {
     : "bg-stone-50 bg-opacity-95"; // light mode: soft, slightly warm white
   const formBg = theme === "dark" ? "bg-black/10" : "bg-white/30"; // glassy overlay
   const borderColor = theme === "dark" ? "border-white/10" : "border-gray-300";
+  const cardBg = theme === "dark" ? "bg-black/10" : "bg-white/30";
 
   return (
     <section
       id="contact"
       className={`${sectionBg} relative py-24 px-4 sm:px-6 md:px-8 transition-colors duration-500`}
     >
-      {/* Background Image */}
-      <div className="absolute inset-0 pointer-events-none">
-        <img
-          src="/noise.png"
-          alt="Background Noise"
-          className="w-full h-full object-cover opacity-10"
-        />
-      </div>
-
       {/* Heading */}
       <div className="max-w-4xl mx-auto text-center mb-16 relative z-10">
         <h2 className={`text-4xl font-bold mb-4 drop-shadow-lg ${sectionHeading}`}>
@@ -40,7 +32,7 @@ export default function ContactCTA() {
 
       {/* Form */}
       <div
-        className={`relative z-10 max-w-2xl mx-auto ${formBg} backdrop-blur-3xl border ${borderColor} rounded-3xl shadow-xl p-8 transition-colors duration-500`}
+        className={`relative z-10 max-w-2xl mx-auto ${cardBg} backdrop-blur-3xl border ${borderColor} rounded-3xl shadow-xl p-8 transition-colors duration-500`}
       >
         <ContactForm />
       </div>
