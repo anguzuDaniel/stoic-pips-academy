@@ -1,14 +1,14 @@
 "use client";
 
-import { ReactElement } from "react";
+import { ElementType } from "react";
 import Image from "next/image";
 import { useTheme } from "next-themes";
 
 interface ServiceCardProps {
   title: string;
   description: string;
-  icon: React.ElementType;
-  link: string;
+  icon?: ElementType | null;
+  link?: string;
   image?: string;
 }
 
@@ -53,7 +53,7 @@ export default function ServiceCard({ title, description, icon: Icon, link, imag
       {/* Text Content */}
       <div className="p-6 flex flex-col items-center relative z-10">
         <div className="flex justify-center mb-4">
-          <Icon className={`w-12 h-12 ${iconColor} group-hover:text-blue-500 transition-all duration-300`} />
+            {Icon ? <Icon className="w-10 h-10 mx-auto mb-3 text-blue-500" /> : null}
         </div>
         <h3 className={`text-xl font-semibold text-center mb-2 ${titleColor}`}>{title}</h3>
         <p className={`text-center ${descColor}`}>{description}</p>
