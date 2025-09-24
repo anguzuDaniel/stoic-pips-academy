@@ -1,12 +1,9 @@
 "use client";
 
 import { useTheme } from "next-themes";
+import TextProps from "./TextProps";
 
-interface PageTitleProps {
-    text: String
-}
-
-export default function PageTitle({ text }: PageTitleProps) {
+export default function PageTitle({ text }: TextProps) {
     const { theme } = useTheme();
 
     const headingColor = theme === "dark" ? "text-gray-200" : "text-gray-800";
