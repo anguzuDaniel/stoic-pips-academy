@@ -1,10 +1,4 @@
-export interface Service {
-  title: string;
-  description: string;
-  price: string;
-  originalPrice?: string;
-  features: string[];
-}
+import { Service } from "./Service";
 
 export const services: Record<string, Service> = {
   "group-mentorship": {
