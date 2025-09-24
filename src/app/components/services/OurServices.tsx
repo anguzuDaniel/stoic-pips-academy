@@ -1,7 +1,7 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import ServiceCard from "../ServiceCard";
+import ServiceCard from "./card/ServiceCard";
 import { services } from "./services";
 
 export default function OurServices() {

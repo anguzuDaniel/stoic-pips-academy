@@ -1,16 +1,8 @@
 "use client";
 
-import { ElementType } from "react";
 import Image from "next/image";
 import { useTheme } from "next-themes";
-
-interface ServiceCardProps {
-  title: string;
-  description: string;
-  icon?: ElementType | null;
-  link?: string;
-  image?: string;
-}
+import { ServiceCardProps } from "./ServiceCardProps";
 
 export default function ServiceCard({ title, description, icon: Icon, link, image }: ServiceCardProps) {
   const { theme } = useTheme();
