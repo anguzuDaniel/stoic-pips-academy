@@ -2,17 +2,9 @@
 
 import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
-import Button from "./button/Button";
+import Button from "../button/Button";
 import { services } from "@/data/services";
-
-interface Service {
-  id: string;
-  title: string;
-  description: string;
-  price: string;
-  originalPrice?: string;
-  features: string[];
-}
+import { Service } from "./service";
 
 export default function PricingServices() {
   const { theme } = useTheme();

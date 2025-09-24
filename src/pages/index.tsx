@@ -1,6 +1,6 @@
 import Layout from "../app/components/Layout";
 
-import PricingServices from "@/app/components/PricingServices";
+import PricingServices from "@/app/components/services/PricingServices";
 import FAQ from "@/app/components/FAQ";
 import ContactCTA from "@/app/components/ContactCTA";
 import RecommendedBrokers from "@/app/components/RecommendedBrokers";
