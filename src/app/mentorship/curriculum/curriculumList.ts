@@ -3,38 +3,72 @@ import CurriculumWeek from "./CurriculumWeek";
 export const curriculumList: CurriculumWeek[] = [
   {
     week: "Week 1",
-    title: "Trading Foundations",
-    details:
-      "Introduction to candlesticks, market structure, and support & resistance. Timeframes: 4H & Daily for trend, 15M for entry refinement.",
+    title: "Introduction, Setup & Market Foundations",
+    details: [
+      "Get started with MT5/Deriv setup, broker overview, and platform navigation.",
+      "Understand market types: Synthetic Indices (VIX, Boom/Crash, Step Index) and Forex Pairs (XAU/USD, GBP/JPY).",
+      "Basics of candlesticks: wick, body, momentum candles, and how they tell a story.",
+      "Learn support & resistance levels and how to use them as decision points.",
+      "Timeframes: 4H & Daily for overall structure; 15M for entry refinement.",
+    ],
   },
   {
     week: "Week 2",
-    title: "Supply & Demand Zones",
-    details:
-      "Learn to identify and draw accurate supply & demand zones. Understand how to use them to predict reversals and continuations. Timeframes: 4H for zones, 1H for confirmation.",
+    title: "Price Action, Market Structure & Candlestick Reading",
+    details: [
+      "Learn price action theory: market trends (uptrend, downtrend, ranging).",
+      "Break of structure (BOS) and change of character (ChoCH).",
+      "Candlestick psychology: engulfing, pin bars, rejection wicks.",
+      "Multi-timeframe analysis: Top-down approach from Daily → 4H → 1H → 15M.",
+      "Application across both forex (majors + gold) and synthetic indices (VIX 50, VIX 75).",
+    ],
   },
   {
     week: "Week 3",
-    title: "Chart Patterns & Market Psychology",
-    details:
-      "Deep dive into chart patterns (flags, head & shoulders, triangles). Learn why they form and how trader psychology drives these setups.",
+    title: "Supply & Demand Zones – Drawing & Trade Triggers",
+    details: [
+      "What are supply & demand zones? Why they form and how to trade them.",
+      "Rules for drawing accurate zones and avoiding false zones.",
+      "Understanding imbalance (FVGs) and order flow.",
+      "Entry models: confirmation entries at zones vs aggressive entries.",
+      "Timeframes: 4H zones, refined on 1H/15M.",
+      "Practical exercises on Gold (XAU/USD), GBP/JPY, VIX 50, and Step Index.",
+    ],
   },
   {
     week: "Week 4",
-    title: "Swing Trading Strategy",
-    details:
-      "Master my swing strategy for XAU/USD, GBP/JPY, and VIX 50. Holding trades 3–10 days with strict rules for entry, stop loss, and profit targets.",
+    title: "Chart Patterns & Entry Models",
+    details: [
+      "Classical patterns: head & shoulders, double tops/bottoms, triangles, flags.",
+      "Continuation vs reversal patterns and how to filter them.",
+      "Combining chart patterns with supply & demand for high-probability setups.",
+      "Entry triggers: market structure shifts, candle confirmations, liquidity sweeps.",
+      "Risk-to-reward optimization: catching 3R–5R trades.",
+    ],
   },
   {
     week: "Week 5",
-    title: "Risk Management & Trading Psychology",
-    details:
-      "Position sizing, managing drawdowns, and mastering emotions. Develop habits to avoid overtrading and revenge trading.",
+    title: "Risk Management & Journal Building",
+    details: [
+      "Position sizing explained (lot sizes for synthetics vs forex).",
+      "Setting stop losses properly and avoiding over-leverage.",
+      "Building and maintaining a trading journal:",
+      "  • Record entry, exit, screenshots, and psychology at entry.",
+      "  • Use journaling to spot mistakes and improve.",
+      "Learn how to manage volatility in synthetic indices (VIX spikes) vs forex pairs.",
+      "Building a sustainable strategy with controlled risk.",
+    ],
   },
   {
     week: "Week 6",
-    title: "Backtesting, Journaling & Consistency",
-    details:
-      "Build a trading journal with screenshots and notes. Learn backtesting techniques to validate your edge. Goal: achieve consistent 3–5R monthly.",
+    title: "Live Trading Analysis, Psychology & Scaling Up",
+    details: [
+      "Weekly live chart markups and trade breakdowns.",
+      "Real-time trade planning and execution reviews.",
+      "Trading psychology: overcoming fear, greed, and impatience.",
+      "Scaling up accounts gradually without breaking consistency.",
+      "Preparing for funded trading challenges (MyForexFunds, FTMO) or personal growth.",
+      "Lifetime strategies for resilience and discipline.",
+    ],
   },
 ];

@@ -42,9 +42,11 @@ export default function Curriculum() {
               )}
             </button>
             {openIndex === idx && (
-              <p className={`mt-3 text-sm leading-relaxed ${textColor}`}>
-                {item.details}
-              </p>
+              <ul className={`mt-3 text-sm leading-relaxed list-disc pl-5 ${textColor}`}>
+                {item.details.map((detail, dIdx) => (
+                  <li key={dIdx}>{detail}</li>
+                ))}
+              </ul>
             )}
           </div>
         ))}
