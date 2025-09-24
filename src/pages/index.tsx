@@ -3,7 +3,7 @@ import Layout from "../app/components/Layout";
 import PricingServices from "@/app/components/services/PricingServices";
 import FAQ from "@/app/components/FAQ";
 import ContactCTA from "@/app/components/ContactCTA";
-import RecommendedBrokers from "@/app/components/RecommendedBrokers";
+import RecommendedBrokers from "@/app/components/brokers/RecommendedBrokers";
 import Hero from "@/app/components/Hero";
 import OurServices from "@/app/components/services/OurServices";
 import AboutSection from "@/app/components/AboutSection";
