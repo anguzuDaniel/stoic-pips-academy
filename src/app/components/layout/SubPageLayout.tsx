@@ -1,7 +1,7 @@
 "use client";
 
 import { ThemeProvider } from "next-themes";
-import "../globals.css";
+import "../../globals.css";
 import Footer from "../Footer";
 import { PageWrapper } from "./PageWrapper";
 import LayoutProps from "./LayoutProps";
