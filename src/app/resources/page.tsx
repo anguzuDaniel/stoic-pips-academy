@@ -1,5 +1,4 @@
 import SubPageLayout from "../components/SubPageLayout";
-import RootLayout from "../layout";
 
 export default function Resources() {
     return (
