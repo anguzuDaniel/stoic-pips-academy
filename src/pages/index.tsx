@@ -7,7 +7,7 @@ import RecommendedBrokers from "@/app/components/brokers/RecommendedBrokers";
 import Hero from "@/app/components/Hero";
 import OurServices from "@/app/components/services/OurServices";
 import AboutSection from "@/app/components/AboutSection";
-import TestimonialsSection from "@/app/components/TestimonialsSection";
+import TestimonialsSection from "@/app/components/testimonials/TestimonialsSection";
 
 export default function Home() {
   return (
