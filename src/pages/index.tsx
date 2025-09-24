@@ -1,4 +1,3 @@
-import ServiceCard from "@/app/components/ServiceCard";
 import Layout from "../app/components/Layout";
 
 import PricingServices from "@/app/components/PricingServices";

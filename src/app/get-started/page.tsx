@@ -1,7 +1,6 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import { useParams } from "next/navigation";
 import { Service, services } from "@/data/services";
 import Button from "@/app/components/Button";
 
