@@ -1,8 +1,8 @@
 "use client";
-import type { Metadata } from "next";
-import { ThemeProvider } from "next-themes";
+
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Providers } from "./components/provider/providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,9 +23,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={true}>
+        <Providers>
           {children}
-        </ThemeProvider>
+        </Providers>
       </body>
     </html>
   );

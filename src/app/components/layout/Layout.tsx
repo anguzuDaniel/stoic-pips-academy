@@ -6,10 +6,11 @@ import Navbar from "../Navbar";
 import Footer from "../Footer";
 import { PageWrapper } from "./PageWrapper";
 import LayoutProps from "./LayoutProps";
+import { Providers } from "../provider/providers";
 
 export default function Layout({ children }: LayoutProps) {
   return (
-    <ThemeProvider attribute="class" defaultTheme="light" enableSystem={true}>
+    <Providers>
       <PageWrapper>
         <header className="fixed w-full bg-white/10 backdrop-blur-md border-b border-white/20 z-50">
           <Navbar />
@@ -22,6 +23,6 @@ export default function Layout({ children }: LayoutProps) {
 
         <Footer />
       </PageWrapper>
-    </ThemeProvider>
+    </Providers>
   );
 }

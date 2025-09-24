@@ -32,7 +32,7 @@ export default function WhyJoinAccordion({
               onClick={() => toggle(idx)}
               className={`flex w-full items-center justify-between font-medium ${textColor}`}
             >
-              <span>✅ {item.title}</span>
+              <span>{item.title}</span>
               {openIndex === idx ? (
                 <ChevronUpIcon className="w-5 h-5" />
               ) : (

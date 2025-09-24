@@ -5,19 +5,18 @@ import "../../globals.css";
 import Footer from "../Footer";
 import { PageWrapper } from "./PageWrapper";
 import LayoutProps from "./LayoutProps";
-
+import { Providers } from "../provider/providers";
 
 export default function SubPageLayout({ children }: LayoutProps) {
   return (
-    <ThemeProvider attribute="class" defaultTheme="light" enableSystem={true}>
+    <Providers>
       <PageWrapper>
-        {/* Main Content */}
         <main className="flex-grow">
           {children}
         </main>
 
         <Footer />
       </PageWrapper>
-    </ThemeProvider>
+    </Providers>
   );
 }

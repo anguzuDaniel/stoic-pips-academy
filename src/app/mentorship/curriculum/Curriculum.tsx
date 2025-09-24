@@ -33,7 +33,7 @@ export default function Curriculum() {
               className={`flex w-full items-center justify-between font-semibold ${textColor}`}
             >
               <span>
-                📅 {item.week} – {item.title}
+                {item.week} – {item.title}
               </span>
               {openIndex === idx ? (
                 <ChevronUpIcon className="w-5 h-5" />
