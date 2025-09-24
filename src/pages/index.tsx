@@ -1,4 +1,4 @@
-import Layout from "../app/components/Layout";
+import Layout from "../app/components/layout/Layout";
 
 import PricingServices from "@/app/components/services/PricingServices";
 import FAQ from "@/app/components/FAQ";

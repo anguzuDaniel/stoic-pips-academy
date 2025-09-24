@@ -1,6 +1,6 @@
 import PageText from "../components/ text/PageText";
 import PageTitle from "../components/ text/PageTitle";
-import SubPageLayout from "../components/SubPageLayout";
+import SubPageLayout from "../components/layout/SubPageLayout";
 
 export default function Mentorship() {
     return (

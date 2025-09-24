@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import DarkModeToggle from "./DarkModeToggle";
+import DarkModeToggle from "./button/DarkModeToggle";
 import { useTheme } from "next-themes";
 
 export default function Navbar() {
