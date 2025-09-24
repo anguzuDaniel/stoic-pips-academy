@@ -1,14 +1,3 @@
-import {
-  ChartBarIcon,
-  CurrencyDollarIcon,
-  AcademicCapIcon,
-  CogIcon,
-  WalletIcon,
-  ComputerDesktopIcon,
-  UserGroupIcon,
-} from "@heroicons/react/24/solid";
-import { ElementType } from "react";
-
 export interface Service {
   title: string;
   description: string;
