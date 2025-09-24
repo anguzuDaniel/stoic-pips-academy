@@ -2,7 +2,7 @@
 
 import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
-import Button from "./Button";
+import Button from "./button/Button";
 import { services } from "@/data/services";
 
 interface Service {

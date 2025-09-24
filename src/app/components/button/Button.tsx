@@ -1,16 +1,8 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import { ReactNode } from "react";
 import Link from "next/link";
-
-interface ButtonProps {
-  children: ReactNode;
-  onClick?: () => void;
-  type?: "button" | "submit" | "reset";
-  className?: string;
-  href?: string; // ✅ add this
-}
+import { ButtonProps } from "./ButtonProps";
 
 export default function Button({
   children,

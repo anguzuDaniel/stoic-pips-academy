@@ -1,7 +1,7 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import Button from "./Button";
+import Button from "./button/Button";
 
 export default function ContactForm() {
   const { theme } = useTheme();

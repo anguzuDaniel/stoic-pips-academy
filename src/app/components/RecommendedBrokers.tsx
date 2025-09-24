@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useTheme } from "next-themes";
 import ContactBackground from "./ContactBackground";
-import Button from "./Button";
+import Button from "./button/Button";
 
 const brokers = [
   {

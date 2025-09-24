@@ -2,7 +2,7 @@
 
 import { useTheme } from "next-themes";
 import { Service, services } from "@/data/services";
-import Button from "@/app/components/Button";
+import Button from "@/app/components/button/Button";
 
 export default function GetStartedPage({  title, description, price, originalPrice, features }: Service) {
   const { theme } = useTheme();
