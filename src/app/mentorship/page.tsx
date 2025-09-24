@@ -1,9 +1,10 @@
-import AboutSection from "@/app/components/AboutSection";
+import SubPageLayout from "../components/SubPageLayout";
+import RootLayout from "../layout";
 
 export default function Mentorship() {
     return (
-        <section className="">
-            <AboutSection />
-        </section>
+        <SubPageLayout>
+            <p>Mentorship page to be added!</p>
+        </SubPageLayout>
     );
 }

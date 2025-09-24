@@ -1,9 +1,10 @@
-import AboutSection from "@/app/components/AboutSection";
+import SubPageLayout from "../components/SubPageLayout";
+import RootLayout from "../layout";
 
 export default function Resources() {
     return (
-        <section className="w-100">
-            <p>Resource page to be added</p>
-        </section>
+        <SubPageLayout>
+            <p>Mentorship page to be added!</p>
+        </SubPageLayout>
     );
 }

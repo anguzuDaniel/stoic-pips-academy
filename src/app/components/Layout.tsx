@@ -6,7 +6,7 @@ import "../globals.css";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 
-interface LayoutProps {
+export interface LayoutProps {
   children: ReactNode;
 }
 
@@ -29,7 +29,7 @@ export default function Layout({ children }: LayoutProps) {
   );
 }
 
-function PageWrapper({ children }: { children: ReactNode }) {
+export function PageWrapper({ children }: { children: ReactNode }) {
   const { theme } = useTheme();
   const bgColor = theme === "dark"
     ? "bg-gray-700" // Dark mode background
