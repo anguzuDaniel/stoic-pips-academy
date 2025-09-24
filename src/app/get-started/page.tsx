@@ -1,7 +1,6 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import { services } from "@/data/services";
 import Button from "@/app/components/button/Button";
 import { Service } from "@/data/Service";
 
