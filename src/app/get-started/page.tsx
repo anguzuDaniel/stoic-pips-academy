@@ -1,8 +1,9 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import { Service, services } from "@/data/services";
+import { services } from "@/data/services";
 import Button from "@/app/components/button/Button";
+import { Service } from "@/data/Service";
 
 export default function GetStartedPage({  title, description, price, originalPrice, features }: Service) {
   const { theme } = useTheme();
