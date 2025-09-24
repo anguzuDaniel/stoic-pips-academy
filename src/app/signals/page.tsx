@@ -1,10 +1,13 @@
+import PageText from "../components/ text/PageText";
+import PageTitle from "../components/ text/PageTitle";
 import SubPageLayout from "../components/layout/SubPageLayout";
-import RootLayout from "../layout";
 
 export default function Resources() {
     return (
         <SubPageLayout>
-            <p>Mentorship page to be added!</p>
+            <PageTitle text="Signals"></PageTitle>
+
+            <PageText text={`Founded in 2024 by, we focus on discipline, mindset, and strategy to grow your trading journey.`}></PageText>
         </SubPageLayout>
     );
 }
