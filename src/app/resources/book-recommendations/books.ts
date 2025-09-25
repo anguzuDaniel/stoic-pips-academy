@@ -1,4 +1,4 @@
-import { Book } from "./book";
+import { Book } from "./Book";
 
 export const books: Book[] = [
   // Forex & Trading

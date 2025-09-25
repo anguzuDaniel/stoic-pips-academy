@@ -1,17 +1,16 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import { books } from "./bookRecommendations";
-import { Book } from "./book";
+import { books } from "./books";
+import { Book } from "./Book";
 
-export default function Resources() {
+export default function BookRecommendations() {
   const { theme } = useTheme();
 
   const headingColor = theme === "dark" ? "text-white" : "text-gray-900";
   const textColor = theme === "dark" ? "text-gray-300" : "text-gray-700";
   const bgColor = theme === "dark" ? "bg-gray-900" : "bg-gray-50";
 
-    // Group books by category
   const booksByCategory: Record<string, Book[]> = books.reduce((acc, book) => {
     if (!acc[book.category]) acc[book.category] = [];
     acc[book.category].push(book);
@@ -19,7 +18,7 @@ export default function Resources() {
   }, {} as Record<string, Book[]>);
 
   return (
-    <div className={`p-6 ${bgColor} min-h-screen`}>
+    <div>
       <h3 className={`text-2xl font-semibold mb-4 ${headingColor}`}>Recommended Books</h3>
 
       {Object.entries(booksByCategory).map(([category, booksInCategory]) => (

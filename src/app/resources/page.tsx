@@ -2,6 +2,7 @@
 
 import { useTheme } from "next-themes";
 import SubPageLayout from "../components/layout/SubPageLayout";
+import BookRecommendations from "./book-recommendations/BookRecommendations";
 
 export default function Resources() {
   const { theme } = useTheme();
@@ -67,7 +68,7 @@ export default function Resources() {
             </ul>
           </div>
 
-            <Resources />
+            <BookRecommendations />
         </div>
       </section>
     </SubPageLayout>
