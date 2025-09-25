@@ -55,18 +55,18 @@ export default function ServiceDetails({
                 </div>
               </div>
 
-              <div className={`p-4 rounded-lg border ${borderColor} bg-white dark:bg-gray-900`}>
+                <div className={`p-4 rounded-lg border ${borderColor} ${cardBg}`}>
                 <h4 className={`font-semibold mb-2 ${headingColor}`}>
-                  ✨ Academy Benefits
+                    ✨ Academy Benefits
                 </h4>
                 <ul className={`text-sm space-y-1 ${textColor}`}>
-                  <li>• Lifetime course access</li>
-                  <li>• Daily market analysis</li>
-                  <li>• Private trading community</li>
-                  <li>• Personal mentorship</li>
-                  <li>• Risk management tools</li>
+                    <li>• Lifetime course access</li>
+                    <li>• Daily market analysis</li>
+                    <li>• Private trading community</li>
+                    <li>• Personal mentorship</li>
+                    <li>• Risk management tools</li>
                 </ul>
-              </div>
+                </div>
             </div>
         </div>
     );
