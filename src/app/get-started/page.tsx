@@ -7,6 +7,7 @@ import { Service } from "@/data/Service";
 import PaymentMethods from "./components/PaymentMethods";
 import PriceSummary from "./components/PriceSummary";
 import ServiceDetails from "./components/ServiceDetails";
+import SubPageLayout from "../components/layout/SubPageLayout";
 
 export default function GetStartedPage({
   title,
@@ -49,84 +50,84 @@ export default function GetStartedPage({
   };
 
   return (
-    <section
-      className={`min-h-screen px-4 sm:px-6 lg:px-8 py-12 ${
-        theme === "dark" ? "bg-gray-900" : "bg-white"
-      }`}
-    >
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-12">
-          <h1 className={`text-4xl md:text-5xl font-bold mb-4 ${headingColor}`}>
-            Join Stoic Pips Academy
-          </h1>
-          <p className={`text-lg ${textColor} max-w-2xl mx-auto`}>
-            Complete your enrollment and start your trading journey
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
-          <div className="lg:col-span-2">
-            <div className={`rounded-2xl p-8 ${cardBg} border ${borderColor} shadow-lg`}>
-              <h3 className={`text-2xl font-bold mb-6 ${headingColor}`}>
-                Complete Payment
-              </h3>
-
-              <PriceSummary 
-                title={title} 
-                description={description} 
-                price={price}
-                originalPrice={originalPrice}
-                features={features}
-              />
-
-              <PaymentMethods />
-
-              <Button 
-                onClick={handlePayment} 
-                className="w-full py-4 text-lg font-semibold mt-4"
-                disabled={isProcessing || !activeMethod}
-              >
-                {isProcessing ? (
-                  <div className="flex items-center justify-center">
-                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
-                    Processing Payment...
-                  </div>
-                ) : (
-                  `Enroll Now - ${price}`
-                )}
-              </Button>
-
-              <div className="mt-6 text-center">
-                <p className={`text-sm ${textColor} flex items-center justify-center`}>
-                  <span className="mr-2">🔒</span>
-                  Secure & encrypted payment processing
-                </p>
-                <p className={`text-xs mt-2 ${textColor} opacity-75`}>
-                  7-day money-back guarantee • Instant access upon payment
-                </p>
-              </div>
-            </div>
+    <SubPageLayout>
+      <section
+        className={`px-4 sm:px-6 lg:px-8 py-12`}
+      >
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12">
+            <h1 className={`text-4xl md:text-5xl font-bold mb-4 ${headingColor}`}>
+              Join Stoic Pips Academy
+            </h1>
+            <p className={`text-lg ${textColor} max-w-2xl mx-auto`}>
+              Complete your enrollment and start your trading journey
+            </p>
           </div>
 
-          <ServiceDetails
-            title={title} 
-            description={description} 
-            price={price}
-            originalPrice={originalPrice}
-            features={features}
-          />
-        </div>
-      </div>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
+            <div className="lg:col-span-2">
+              <div className={`rounded-2xl p-8 ${cardBg} border ${borderColor} shadow-lg`}>
+                <h3 className={`text-2xl font-bold mb-6 ${headingColor}`}>
+                  Complete Payment
+                </h3>
 
-      <style jsx>{`
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(-10px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fadeIn {
-          animation: fadeIn 0.3s ease-out;
-        }
-      `}</style>
-    </section>
+                <PriceSummary 
+                  title={title} 
+                  description={description} 
+                  price={price}
+                  originalPrice={originalPrice}
+                  features={features}
+                />
+
+                <PaymentMethods />
+
+                <Button 
+                  onClick={handlePayment} 
+                  className="w-full py-4 text-lg font-semibold mt-4"
+                  disabled={isProcessing || !activeMethod}
+                >
+                  {isProcessing ? (
+                    <div className="flex items-center justify-center">
+                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                      Processing Payment...
+                    </div>
+                  ) : (
+                    `Enroll Now - ${price}`
+                  )}
+                </Button>
+
+                <div className="mt-6 text-center">
+                  <p className={`text-sm ${textColor} flex items-center justify-center`}>
+                    <span className="mr-2">🔒</span>
+                    Secure & encrypted payment processing
+                  </p>
+                  <p className={`text-xs mt-2 ${textColor} opacity-75`}>
+                    7-day money-back guarantee • Instant access upon payment
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <ServiceDetails
+              title={title} 
+              description={description} 
+              price={price}
+              originalPrice={originalPrice}
+              features={features}
+            />
+          </div>
+        </div>
+
+        <style jsx>{`
+          @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+          }
+          .animate-fadeIn {
+            animation: fadeIn 0.3s ease-out;
+          }
+        `}</style>
+      </section>
+    </SubPageLayout>
   );
 }

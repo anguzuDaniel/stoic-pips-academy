@@ -6,6 +6,9 @@ import { testimonials } from "./testimonials";
 export default function TestimonialsSection() {
   const { theme } = useTheme();
 
+  const bodyBackground = theme === "dark"
+    ? "bg-gray-700 bg-opacity-90"
+    : "bg-stone-50 bg-opacity-95";
   const headingColor = theme === "dark" ? "text-gray-200" : "text-gray-800";
   const textColor = theme === "dark" ? "text-gray-300" : "text-gray-700";
   const cardBg = theme === "dark" ? "bg-gray-800" : "bg-white";
@@ -13,7 +16,7 @@ export default function TestimonialsSection() {
   return (
     <section
       id="testimonials"
-      className={`py-20 px-4 sm:px-6 md:px-8 transition-colors duration-500`}
+      className={`py-20 px-4 sm:px-6 md:px-8 transition-colors duration-500 ${bodyBackground}`}
     >
       <div className="max-w-6xl mx-auto text-center mb-12">
         <h2 className={`text-4xl font-bold mb-4 ${headingColor}`}>

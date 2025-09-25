@@ -8,25 +8,28 @@ import Hero from "@/app/components/Hero";
 import OurServices from "@/app/components/services/OurServices";
 import AboutSection from "@/app/components/AboutSection";
 import TestimonialsSection from "@/app/components/testimonials/TestimonialsSection";
+import RootLayout from "@/app/layout";
 
 export default function Home() {
   return (
-    <Layout>
-      <Hero />
+    <RootLayout>
+      <Layout>
+        <Hero />
 
-      <AboutSection />
+        <AboutSection />
 
-      <OurServices />
+        <OurServices />
 
-      <PricingServices />
+        <PricingServices />
 
-      <RecommendedBrokers />
+        <RecommendedBrokers />
 
-      <TestimonialsSection />
+        <TestimonialsSection />
 
-      <FAQ />
+        <FAQ />
 
-      <ContactCTA />
-    </Layout>
+        <ContactCTA />
+      </Layout>
+    </RootLayout>
   );
 }

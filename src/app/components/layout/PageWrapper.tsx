@@ -5,9 +5,10 @@ import { ReactNode } from "react";
 
 export function PageWrapper({ children }: { children: ReactNode }) {
   const { theme } = useTheme();
-  const bgColor = theme === "dark"
-    ? "bg-gray-700" // Dark mode background
-    : "bg-white";   // Light mode background
+  const bodyBackground = theme === "dark"
+    ? "bg-gray-700 bg-opacity-90"   // dark mode: deep gray with slight transparency
+    : "bg-stone-50 bg-opacity-95"; // light mode: soft, slightly warm white
 
-  return <div className={`min-h-screen flex flex-col ${bgColor} transition-colors duration-500`}>{children}</div>;
+
+  return <div className={`min-h-screen flex flex-col ${bodyBackground} transition-colors duration-500`}>{children}</div>;
 }

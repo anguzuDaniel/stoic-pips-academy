@@ -24,7 +24,6 @@ export default function Resources() {
             Founded in 2024, Stoic Pips focuses on discipline, mindset, and strategy to grow your trading journey. Below are some helpful resources, educational links, and recommended books for traders of all levels.
           </p>
 
-          {/* Downloadable Resources */}
           <div className="mb-8">
             <h3 className={`text-2xl font-semibold mb-4 ${headingColor}`}>Downloadable Resources</h3>
             <ul className={`list-disc pl-5 ${textColor}`}>
@@ -46,7 +45,6 @@ export default function Resources() {
             </ul>
           </div>
 
-          {/* Educational Links */}
           <div className="mb-8">
             <h3 className={`text-2xl font-semibold mb-4 ${headingColor}`}>Educational Links</h3>
             <ul className={`list-disc pl-5 ${textColor}`}>

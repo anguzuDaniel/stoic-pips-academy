@@ -8,14 +8,32 @@ export default function DarkModeToggle() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
-  if (!mounted) return null; // Avoid hydration mismatch
+  const toggleTheme = () => {
+    const newTheme = theme === "dark" ? "light" : "dark";
+    setTheme(newTheme);
+    
+    if (typeof window !== 'undefined') {
+      localStorage.setItem("stoic-pips-theme", newTheme);
+    }
+  };
+
+  if (!mounted) {
+    return (
+      <button className="p-2 rounded-full bg-gray-200 dark:bg-gray-800 w-9 h-9 opacity-50">
+        <SunIcon className="w-5 h-5" />
+      </button>
+    );
+  }
 
   return (
     <button
-      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      className="p-2 rounded-full bg-white/20 dark:bg-black/20 text-white hover:bg-white/30 dark:hover:bg-black/30 transition-all z-50"
+      onClick={toggleTheme}
+      className="p-2 rounded-full bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700 transition-all"
+      aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
     >
       {theme === "dark" ? (
         <SunIcon className="w-5 h-5" />
