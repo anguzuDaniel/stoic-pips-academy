@@ -4,6 +4,9 @@ import { useTheme } from "next-themes";
 import { useState } from "react";
 import Button from "@/app/components/button/Button";
 import { Service } from "@/data/Service";
+import PaymentMethods from "./components/PaymentMethods";
+import PriceSummary from "./components/PriceSummary";
+import ServiceDetails from "./components/ServiceDetails";
 
 export default function GetStartedPage({
   title,
@@ -13,84 +16,117 @@ export default function GetStartedPage({
   features,
 }: Service) {
   const { theme } = useTheme();
-  const [paymentMethod, setPaymentMethod] = useState<string>("");
+  const [activeMethod, setActiveMethod] = useState<string | null>(null);
+  const [formData, setFormData] = useState<Record<string, string>>({});
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const headingColor = theme === "dark" ? "text-white" : "text-gray-900";
   const textColor = theme === "dark" ? "text-gray-300" : "text-gray-700";
-  const cardBg =
-    theme === "dark"
-      ? "bg-gray-800/80 border border-gray-700"
-      : "bg-white shadow-md border border-gray-200";
+  const borderColor = theme === "dark" ? "border-gray-700" : "border-gray-200";
+  const cardBg = theme === "dark" ? "bg-gray-800" : "bg-gray-50";
 
-  const handlePayment = () => {
-    if (!paymentMethod) {
+  const handleChange = (field: string, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handlePayment = async () => {
+    if (!activeMethod) {
       alert("Please select a payment method before proceeding.");
       return;
     }
-    alert(`Proceeding to payment with ${paymentMethod} for ${title}`);
+    
+    setIsProcessing(true);
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    alert(
+      `Payment successful! Welcome to ${title}.\nDetails: ${JSON.stringify(
+        formData,
+        null,
+        2
+      )}`
+    );
+    setIsProcessing(false);
   };
 
   return (
     <section
-      className={`min-h-screen flex items-center justify-center px-6 py-20 ${
-        theme === "dark" ? "bg-gray-900" : "bg-gray-50"
+      className={`min-h-screen px-4 sm:px-6 lg:px-8 py-12 ${
+        theme === "dark" ? "bg-gray-900" : "bg-white"
       }`}
     >
-      <div className={`max-w-2xl w-full rounded-3xl p-10 ${cardBg}`}>
-        {/* Title & Description */}
-        <h1 className={`text-4xl font-bold mb-6 ${headingColor}`}>{title}</h1>
-        <p className={`mb-6 ${textColor}`}>{description}</p>
-
-        {/* Features */}
-        <ul className={`space-y-3 mb-8 ${textColor}`}>
-          {features.map((feature: string, idx: number) => (
-            <li key={idx}>✅ {feature}</li>
-          ))}
-        </ul>
-
-        {/* Pricing */}
-        <div className="flex items-center justify-between mb-8">
-          {originalPrice && (
-            <span className={`line-through ${textColor}`}>{originalPrice}</span>
-          )}
-          <span className="text-3xl font-bold text-blue-500">{price}</span>
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-12">
+          <h1 className={`text-4xl md:text-5xl font-bold mb-4 ${headingColor}`}>
+            Join Stoic Pips Academy
+          </h1>
+          <p className={`text-lg ${textColor} max-w-2xl mx-auto`}>
+            Complete your enrollment and start your trading journey
+          </p>
         </div>
 
-        {/* Payment Options */}
-        <div className="mb-6">
-          <h2 className={`text-xl font-semibold mb-3 ${headingColor}`}>
-            Choose Payment Method
-          </h2>
-          <div className="space-y-3">
-            {["Bank Transfer", "Bitcoin", "Airtel Money", "MTN Money"].map(
-              (method) => (
-                <label
-                  key={method}
-                  className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer ${
-                    theme === "dark"
-                      ? "border-gray-700 hover:bg-gray-700/40"
-                      : "border-gray-200 hover:bg-gray-100"
-                  }`}
-                >
-                  <input
-                    type="radio"
-                    name="payment"
-                    value={method}
-                    checked={paymentMethod === method}
-                    onChange={() => setPaymentMethod(method)}
-                  />
-                  <span className={textColor}>{method}</span>
-                </label>
-              )
-            )}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
+          <div className="lg:col-span-2">
+            <div className={`rounded-2xl p-8 ${cardBg} border ${borderColor} shadow-lg`}>
+              <h3 className={`text-2xl font-bold mb-6 ${headingColor}`}>
+                Complete Payment
+              </h3>
+
+              <PriceSummary 
+                title={title} 
+                description={description} 
+                price={price}
+                originalPrice={originalPrice}
+                features={features}
+              />
+
+              <PaymentMethods />
+
+              <Button 
+                onClick={handlePayment} 
+                className="w-full py-4 text-lg font-semibold mt-4"
+                disabled={isProcessing || !activeMethod}
+              >
+                {isProcessing ? (
+                  <div className="flex items-center justify-center">
+                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                    Processing Payment...
+                  </div>
+                ) : (
+                  `Enroll Now - ${price}`
+                )}
+              </Button>
+
+              <div className="mt-6 text-center">
+                <p className={`text-sm ${textColor} flex items-center justify-center`}>
+                  <span className="mr-2">🔒</span>
+                  Secure & encrypted payment processing
+                </p>
+                <p className={`text-xs mt-2 ${textColor} opacity-75`}>
+                  7-day money-back guarantee • Instant access upon payment
+                </p>
+              </div>
+            </div>
           </div>
-        </div>
 
-        {/* Confirm Button */}
-        <Button onClick={handlePayment} className="w-full">
-          Confirm & Pay
-        </Button>
+          <ServiceDetails
+            title={title} 
+            description={description} 
+            price={price}
+            originalPrice={originalPrice}
+            features={features}
+          />
+        </div>
       </div>
+
+      <style jsx>{`
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(-10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeIn {
+          animation: fadeIn 0.3s ease-out;
+        }
+      `}</style>
     </section>
   );
 }
