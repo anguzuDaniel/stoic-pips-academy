@@ -10,16 +10,20 @@ import { Providers } from "../provider/providers";
 
 export default function Layout({ children }: LayoutProps) {
   return (
-    <PageWrapper>
-      <header className="fixed w-full bg-white/10 backdrop-blur-md border-b border-white/20 z-50">
-        <Navbar />
-      </header>
+    <html suppressHydrationWarning>
+      <body>    
+        <PageWrapper>
+            <header className="fixed w-full bg-white/10 backdrop-blur-md border-b border-white/20 z-50">
+              <Navbar />
+            </header>
 
-      <main className="flex-grow">
-        {children}
-      </main>
+            <main className="flex-grow">
+              {children}
+            </main>
 
-      <Footer />
-    </PageWrapper>
+            <Footer />
+        </PageWrapper>
+      </body>
+    </html>
   );
 }

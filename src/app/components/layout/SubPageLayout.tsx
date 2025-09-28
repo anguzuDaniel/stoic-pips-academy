@@ -9,14 +9,16 @@ import { Providers } from "../provider/providers";
 
 export default function SubPageLayout({ children }: LayoutProps) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html suppressHydrationWarning>
+      <body>
         <PageWrapper>
-          <main className="flex-grow">
-            {children}
-          </main>
+            <main className="flex-grow">
+              {children}
+            </main>
 
-          <Footer />
+            <Footer />
         </PageWrapper>
+      </body>
     </html>
   );
 }

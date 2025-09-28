@@ -24,11 +24,11 @@ export default function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <div>
+      <body>
         <Providers>
             {children}
         </Providers>
-      </div>
+      </body>
     </html>
   );
 }
