@@ -1,35 +1,46 @@
-// services/paymentService.ts
+// services/realPaymentService.ts
 export interface PaymentRequest {
-  method: 'Credit Card' | 'Bitcoin';
-  cardNumber?: string;
-  expiryDate?: string;
-  cvv?: string;
-  cardName?: string;
-  btcWallet?: string;
+  method: 'Flutterwave' | 'Tron' | 'Bank Transfer' | 'Mobile Money';
   amount: string;
-  service: string;
+  serviceTitle: string;
+  serviceId?: string;
+  customerEmail?: string;
+  customerName?: string;
+  customerPhone?: string;
 }
 
 export interface PaymentResponse {
   success: boolean;
-  transactionId?: string;
+  paymentLink?: string;
+  tronAddress?: string;
+  trxAmount?: string;
+  usdtAmount?: string;
+  usdAmount?: string;
+  qrCode?: string;
+  paymentUrl?: string;
+  tronScanUrl?: string;
+  bankDetails?: any;
+  mobileMoneyDetails?: any;
   message: string;
-  btcAddress?: string; // For Bitcoin payments
-  btcAmount?: string;  // For Bitcoin payments
 }
 
 class PaymentService {
   async processPayment(paymentRequest: PaymentRequest): Promise<PaymentResponse> {
     try {
       switch (paymentRequest.method) {
-        case 'Credit Card':
-          return await this.processCreditCard(paymentRequest);
-        case 'Bitcoin':
-          return await this.processBitcoin(paymentRequest);
+        case 'Flutterwave':
+          return await this.processFlutterwavePayment(paymentRequest);
+        case 'Tron':
+          return await this.processTronPayment(paymentRequest);
+        case 'Bank Transfer':
+          return await this.processBankTransfer(paymentRequest);
+        case 'Mobile Money':
+          return await this.processMobileMoney(paymentRequest);
         default:
           throw new Error('Unsupported payment method');
       }
     } catch (error) {
+      console.error('Payment processing error:', error);
       return {
         success: false,
         message: 'Payment processing failed. Please try again.'
@@ -37,75 +48,101 @@ class PaymentService {
     }
   }
 
-  private async processCreditCard(payment: PaymentRequest): Promise<PaymentResponse> {
-    // Validate credit card details
-    if (!payment.cardNumber || !payment.expiryDate || !payment.cvv || !payment.cardName) {
-      return {
-        success: false,
-        message: 'Please fill in all credit card details'
-      };
-    }
-
-    if (!this.isValidCard(payment.cardNumber)) {
-      return {
-        success: false,
-        message: 'Please enter a valid card number'
-      };
-    }
-
-    // Simulate Stripe API call
-    await new Promise(resolve => setTimeout(resolve, 2000));
-
-    const isSuccess = Math.random() > 0.1; // 90% success rate
-
-    if (isSuccess) {
+  private async processFlutterwavePayment(payment: PaymentRequest): Promise<PaymentResponse> {
+    try {
+      // For now, simulate Flutterwave payment
+      // In production, integrate with actual Flutterwave API
       return {
         success: true,
-        transactionId: `ch_${Math.random().toString(36).substr(2, 24)}`,
-        message: 'Payment successful! Welcome to Stoic Pips Academy. You now have access to all course materials.'
+        paymentLink: '#', // Actual Flutterwave payment URL
+        message: 'Redirecting to Flutterwave for secure payment (Card, Mobile Money, Bank Transfer)...'
       };
-    } else {
+    } catch (error: any) {
       return {
         success: false,
-        message: 'Payment declined. Please check your card details and try again.'
+        message: 'Flutterwave payment unavailable. Please try another method.'
       };
     }
   }
 
-  private async processBitcoin(payment: PaymentRequest): Promise<PaymentResponse> {
-    // Generate unique BTC address for this payment
-    const btcAddress = await this.generateBitcoinAddress();
-    const btcAmount = await this.calculateBtcAmount(payment.amount);
+  private async processTronPayment(payment: PaymentRequest): Promise<PaymentResponse> {
+    try {
+      const response = await fetch('/api/tron/create-payment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          price: payment.amount,
+          serviceTitle: payment.serviceTitle,
+          customerEmail: payment.customerEmail,
+        }),
+      });
 
-    // For Bitcoin, we consider it "successful" immediately since we're just providing address
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.error || 'Failed to create Tron payment');
+      }
+
+      return {
+        success: true,
+        tronAddress: data.tronAddress,
+        trxAmount: data.trxAmount,
+        usdtAmount: data.usdtAmount,
+        usdAmount: data.usdAmount,
+        qrCode: data.qrCode,
+        paymentUrl: data.paymentUrl,
+        tronScanUrl: data.tronScanUrl,
+        message: data.message
+      };
+    } catch (error: any) {
+      return {
+        success: false,
+        message: error.message || 'Tron payment unavailable. Please try another method.'
+      };
+    }
+  }
+
+  private async processBankTransfer(payment: PaymentRequest): Promise<PaymentResponse> {
+    // Bank transfer details for Uganda
     return {
       success: true,
-      transactionId: `btc_${Date.now()}`,
-      message: `Please send exactly ${btcAmount} BTC to the address below. Access will be granted after 1 confirmation (≈30 minutes).`,
-      btcAddress: btcAddress,
-      btcAmount: btcAmount
+      bankDetails: {
+        bankName: 'Stanbic Bank Uganda',
+        accountName: 'STOIC PIPS ACADEMY',
+        accountNumber: '9030001234567',
+        branch: 'Kampala Main Branch',
+        swiftCode: 'SBICUGKX',
+        currency: 'USD',
+        reference: `STOIC-${Date.now()}`
+      },
+      message: 'Make transfer using the bank details below. Send proof to payments@stoicpips.com'
     };
   }
 
-  private isValidCard(cardNumber: string): boolean {
-    const cleaned = cardNumber.replace(/\s/g, '');
-    return cleaned.length >= 13 && cleaned.length <= 19 && /^\d+$/.test(cleaned);
-  }
-
-  private async generateBitcoinAddress(): Promise<string> {
-    // In production, use a service like BitPay, Coinbase Commerce, or generate unique addresses
-    // For demo, return a static address
-    await new Promise(resolve => setTimeout(resolve, 500));
-    return 'bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh';
-  }
-
-  private async calculateBtcAmount(usdAmount: string): Promise<string> {
-    // In production, fetch real-time BTC price
-    // For demo, use fixed rate
-    const usd = parseFloat(usdAmount.replace('$', '').replace(',', ''));
-    const btcRate = 45000; // $45,000 per BTC
-    const btcAmount = (usd / btcRate).toFixed(8);
-    return btcAmount;
+  private async processMobileMoney(payment: PaymentRequest): Promise<PaymentResponse> {
+    // Mobile Money details for Uganda
+    return {
+      success: true,
+      mobileMoneyDetails: {
+        providers: [
+          {
+            name: 'MTN Mobile Money',
+            number: '+256 772 123 456',
+            nameOnAccount: 'STOIC PIPS ACADEMY',
+            code: '*165*3#'
+          },
+          {
+            name: 'Airtel Money',
+            number: '+256 752 123 456',
+            nameOnAccount: 'STOIC PIPS ACADEMY',
+            code: '*185*9#'
+          }
+        ]
+      },
+      message: 'Send payment to any of the numbers below and WhatsApp proof to +256 XXX XXX XXX'
+    };
   }
 }
 

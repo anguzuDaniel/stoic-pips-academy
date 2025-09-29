@@ -2,13 +2,11 @@
 
 import { useTheme } from "next-themes";
 import { useState } from "react";
-import Button from "@/app/components/button/Button";
 import { Service } from "@/data/Service";
-import PaymentMethods from "./components/PaymentMethods";
 import PriceSummary from "./components/PriceSummary";
 import ServiceDetails from "./components/ServiceDetails";
 import SubPageLayout from "../components/layout/SubPageLayout";
-import { PaymentRequest, paymentService } from "./services/PaymentService";
+import TronPayment from "./components/TronPayment";
 
 export default function GetStartedPage({
   title,
@@ -18,9 +16,7 @@ export default function GetStartedPage({
   features,
 }: Service) {
   const { theme } = useTheme();
-  const [activeMethod, setActiveMethod] = useState<string | null>(null);
   const [formData, setFormData] = useState<Record<string, string>>({});
-  const [isProcessing, setIsProcessing] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [transactionId, setTransactionId] = useState('');
 
@@ -32,53 +28,22 @@ export default function GetStartedPage({
   const handlePaymentSuccess = (txId: string) => {
     setPaymentStatus('success');
     setTransactionId(txId);
-    // Redirect to success page or show success message
-    alert(`Payment successful! Welcome to ${title}. Transaction ID: ${txId}`);
+    // No alert here - let the TronPayment component handle the display
   };
 
   const handlePaymentError = (error: string) => {
     setPaymentStatus('error');
-    alert(`Payment failed: ${error}`);
+    // Show error as inline message instead of alert
+    console.error('Payment error:', error);
   };
 
   const handleFormDataChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleEnrollPayment = async () => {
-    if (!activeMethod) {
-      alert("Please select a payment method before proceeding.");
-      return;
-    }
-
-    setIsProcessing(true);
-
-    try {
-      const paymentRequest: PaymentRequest = {
-        method: activeMethod as 'Credit Card' | 'Bitcoin',
-        amount: price,
-        service: title,
-        ...formData
-      };
-
-      const result = await paymentService.processPayment(paymentRequest);
-
-      if (result.success) {
-        if (activeMethod === 'Bitcoin' && result.btcAddress && result.btcAmount) {
-          // Show Bitcoin payment instructions
-          alert(`BITCOIN PAYMENT INSTRUCTIONS:\n\nSend: ${result.btcAmount} BTC\nTo: ${result.btcAddress}\n\n${result.message}`);
-          handlePaymentSuccess(result.transactionId!);
-        } else {
-          handlePaymentSuccess(result.transactionId!);
-        }
-      } else {
-        handlePaymentError(result.message);
-      }
-    } catch (error) {
-      handlePaymentError('Payment processing failed. Please try again.');
-    } finally {
-      setIsProcessing(false);
-    }
+  // Validate form before showing Tron payment
+  const isFormValid = () => {
+    return formData.name && formData.email;
   };
 
   return (
@@ -110,42 +75,142 @@ export default function GetStartedPage({
                   features={features}
                 />
 
-                <PaymentMethods
-                  price={price}
-                  serviceTitle={title}
-                  onPaymentSuccess={handlePaymentSuccess}
-                  onPaymentError={handlePaymentError}
-                  formData={formData}
-                  // Pass these props to PaymentMethods so it can update the active method
-                  activeMethod={activeMethod}
-                  setActiveMethod={setActiveMethod}
-                  onFormDataChange={handleFormDataChange}
-                />
-
-                {/* SINGLE Enroll Button - This is the main payment button */}
-                <Button 
-                  onClick={handleEnrollPayment} 
-                  className="w-full py-4 text-lg font-semibold mt-6"
-                  disabled={isProcessing || !activeMethod}
-                >
-                  {isProcessing ? (
-                    <div className="flex items-center justify-center">
-                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
-                      Processing Payment...
+                {/* Customer Information Form */}
+                <div className="mb-8 p-6 border border-gray-200 dark:border-gray-700 rounded-xl">
+                  <h4 className={`text-lg font-semibold mb-4 ${headingColor}`}>
+                    Your Information
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className={`block mb-2 text-sm font-medium ${textColor}`}>
+                        Full Name *
+                      </label>
+                      <input
+                        type="text"
+                        value={formData.name || ""}
+                        onChange={(e) => handleFormDataChange('name', e.target.value)}
+                        className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="John Doe"
+                        required
+                      />
                     </div>
-                  ) : (
-                    `Enroll Now - ${price}`
+                    <div>
+                      <label className={`block mb-2 text-sm font-medium ${textColor}`}>
+                        Email Address *
+                      </label>
+                      <input
+                        type="email"
+                        value={formData.email || ""}
+                        onChange={(e) => handleFormDataChange('email', e.target.value)}
+                        className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="john@example.com"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className={`block mb-2 text-sm font-medium ${textColor}`}>
+                        Phone Number (Optional)
+                      </label>
+                      <input
+                        type="tel"
+                        value={formData.phone || ""}
+                        onChange={(e) => handleFormDataChange('phone', e.target.value)}
+                        className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="+256 712 345 678"
+                      />
+                    </div>
+                    <div>
+                      <label className={`block mb-2 text-sm font-medium ${textColor}`}>
+                        Country
+                      </label>
+                      <select
+                        value={formData.country || ""}
+                        onChange={(e) => handleFormDataChange('country', e.target.value)}
+                        className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      >
+                        <option value="">Select your country</option>
+                        <option value="UG">Uganda</option>
+                        <option value="KE">Kenya</option>
+                        <option value="TZ">Tanzania</option>
+                        <option value="RW">Rwanda</option>
+                        <option value="other">Other</option>
+                      </select>
+                    </div>
+                  </div>
+                  
+                  {!isFormValid() && (
+                    <div className="mt-4 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
+                      <p className="text-yellow-700 dark:text-yellow-300 text-sm">
+                        💡 Please fill in your name and email to see payment options.
+                      </p>
+                    </div>
                   )}
-                </Button>
+                </div>
+
+                {/* Tron Payment Component - Only show if form is valid */}
+                {isFormValid() && (
+                  <TronPayment
+                    price={price}
+                    serviceTitle={title}
+                    customerEmail={formData.email}
+                    customerName={formData.name}
+                    onPaymentSuccess={handlePaymentSuccess}
+                    onPaymentError={handlePaymentError}
+                  />
+                )}
+
+                {/* Payment Status Display */}
+                {paymentStatus === 'success' && (
+                  <div className="mt-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
+                    <div className="flex items-center space-x-2">
+                      <span className="text-green-600 dark:text-green-400 text-xl">✅</span>
+                      <div>
+                        <p className="text-green-800 dark:text-green-300 font-semibold">
+                          Tron Payment Instructions Ready!
+                        </p>
+                        <p className="text-green-700 dark:text-green-400 text-sm">
+                          Please complete the payment using the Tron instructions above.
+                          Access will be granted within 30 minutes of payment confirmation.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {paymentStatus === 'error' && (
+                  <div className="mt-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+                    <div className="flex items-center space-x-2">
+                      <span className="text-red-600 dark:text-red-400 text-xl">❌</span>
+                      <div>
+                        <p className="text-red-800 dark:text-red-300 font-semibold">
+                          Payment Setup Failed
+                        </p>
+                        <p className="text-red-700 dark:text-red-400 text-sm">
+                          Please refresh the page and try again.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
 
                 <div className="mt-6 text-center">
                   <p className={`text-sm ${textColor} flex items-center justify-center`}>
-                    <span className="mr-2">🔒</span>
-                    Secure & encrypted payment processing
+                    <span className="mr-2">Ⓣ</span>
+                    Pay with Tron (TRX/USDT) - Fast & Low Fees
                   </p>
                   <p className={`text-xs mt-2 ${textColor} opacity-75`}>
-                    7-day money-back guarantee • Instant access upon payment
+                    7-day money-back guarantee • Instant access upon payment confirmation
                   </p>
+                  
+                  {/* Support Info */}
+                  <div className="mt-4 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                      Need help with Tron payment? Contact:{' '}
+                      <a href="mailto:support@stoicpips.com" className="text-blue-600 dark:text-blue-400 hover:underline">
+                        support@stoicpips.com
+                      </a>
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
