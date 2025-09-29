@@ -8,6 +8,7 @@ import PaymentMethods from "./components/PaymentMethods";
 import PriceSummary from "./components/PriceSummary";
 import ServiceDetails from "./components/ServiceDetails";
 import SubPageLayout from "../components/layout/SubPageLayout";
+import { PaymentRequest, paymentService } from "./services/PaymentService";
 
 export default function GetStartedPage({
   title,
@@ -44,7 +45,6 @@ export default function GetStartedPage({
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  // This function will be called by the main Enroll button
   const handleEnrollPayment = async () => {
     if (!activeMethod) {
       alert("Please select a payment method before proceeding.");
@@ -54,13 +54,26 @@ export default function GetStartedPage({
     setIsProcessing(true);
 
     try {
-      // Simulate payment processing
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      // For demo purposes, simulate successful payment
-      const transactionId = `TX-${Date.now()}-${activeMethod}`;
-      handlePaymentSuccess(transactionId);
-      
+      const paymentRequest: PaymentRequest = {
+        method: activeMethod as 'Credit Card' | 'Bitcoin',
+        amount: price,
+        service: title,
+        ...formData
+      };
+
+      const result = await paymentService.processPayment(paymentRequest);
+
+      if (result.success) {
+        if (activeMethod === 'Bitcoin' && result.btcAddress && result.btcAmount) {
+          // Show Bitcoin payment instructions
+          alert(`BITCOIN PAYMENT INSTRUCTIONS:\n\nSend: ${result.btcAmount} BTC\nTo: ${result.btcAddress}\n\n${result.message}`);
+          handlePaymentSuccess(result.transactionId!);
+        } else {
+          handlePaymentSuccess(result.transactionId!);
+        }
+      } else {
+        handlePaymentError(result.message);
+      }
     } catch (error) {
       handlePaymentError('Payment processing failed. Please try again.');
     } finally {
@@ -107,7 +120,6 @@ export default function GetStartedPage({
                   activeMethod={activeMethod}
                   setActiveMethod={setActiveMethod}
                   onFormDataChange={handleFormDataChange}
-                  setFormData={setFormData}
                 />
 
                 {/* SINGLE Enroll Button - This is the main payment button */}
