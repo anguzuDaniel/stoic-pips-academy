@@ -8,6 +8,19 @@ import ServiceDetails from "./components/ServiceDetails";
 import SubPageLayout from "../components/layout/SubPageLayout";
 import TronPayment from "./components/TronPayment";
 
+// Add default values in case props are undefined
+const defaultService: Partial<Service> = {
+  title: "Trading Course",
+  description: "Master trading with our comprehensive course",
+  price: "$299",
+  features: [
+    "Daily market analysis",
+    "Risk management strategies", 
+    "Trading community access",
+    "Lifetime course updates"
+  ]
+};
+
 export default function GetStartedPage({
   title,
   description,
@@ -20,6 +33,13 @@ export default function GetStartedPage({
   const [paymentStatus, setPaymentStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [transactionId, setTransactionId] = useState('');
 
+  // Use default values if props are undefined
+  const safeTitle = title || defaultService.title || "Trading Course";
+  const safeDescription = description || defaultService.description || "Master trading with our comprehensive course";
+  const safePrice = price || defaultService.price || "$299";
+  const safeFeatures = features || defaultService.features || [];
+  const safeOriginalPrice = originalPrice;
+
   const headingColor = theme === "dark" ? "text-white" : "text-gray-900";
   const textColor = theme === "dark" ? "text-gray-300" : "text-gray-700";
   const borderColor = theme === "dark" ? "border-gray-700" : "border-gray-200";
@@ -28,12 +48,10 @@ export default function GetStartedPage({
   const handlePaymentSuccess = (txId: string) => {
     setPaymentStatus('success');
     setTransactionId(txId);
-    // No alert here - let the TronPayment component handle the display
   };
 
   const handlePaymentError = (error: string) => {
     setPaymentStatus('error');
-    // Show error as inline message instead of alert
     console.error('Payment error:', error);
   };
 
@@ -68,11 +86,11 @@ export default function GetStartedPage({
                 </h3>
 
                 <PriceSummary 
-                  title={title} 
-                  description={description} 
-                  price={price}
-                  originalPrice={originalPrice}
-                  features={features}
+                  title={safeTitle} 
+                  description={safeDescription} 
+                  price={safePrice}
+                  originalPrice={safeOriginalPrice}
+                  features={safeFeatures}
                 />
 
                 {/* Customer Information Form */}
@@ -150,8 +168,8 @@ export default function GetStartedPage({
                 {/* Tron Payment Component - Only show if form is valid */}
                 {isFormValid() && (
                   <TronPayment
-                    price={price}
-                    serviceTitle={title}
+                    price={safePrice}
+                    serviceTitle={safeTitle}
                     customerEmail={formData.email}
                     customerName={formData.name}
                     onPaymentSuccess={handlePaymentSuccess}
@@ -217,11 +235,11 @@ export default function GetStartedPage({
 
             {/* Right Side - Service Details */}
             <ServiceDetails
-              title={title} 
-              description={description} 
-              price={price}
-              originalPrice={originalPrice}
-              features={features}
+              title={safeTitle} 
+              description={safeDescription} 
+              price={safePrice}
+              originalPrice={safeOriginalPrice}
+              features={safeFeatures}
             />
           </div>
         </div>
