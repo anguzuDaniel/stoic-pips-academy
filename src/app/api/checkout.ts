@@ -1,27 +1,26 @@
-// import { NextResponse } from "next/server";
-// import Stripe from "stripe";
+// app/api/payments/credit-card/route.ts
+import { NextRequest, NextResponse } from 'next/server';
 
-// const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-//   apiVersion: "2024-06-20",
-// });
-
-// export async function POST() {
-//   const session = await stripe.checkout.sessions.create({
-//     payment_method_types: ["card"],
-//     line_items: [
-//       {
-//         price_data: {
-//           currency: "usd",
-//           product_data: { name: "Stoic Pips Academy Mentorship" },
-//           unit_amount: 9900, // $99
-//         },
-//         quantity: 1,
-//       },
-//     ],
-//     mode: "payment",
-//     success_url: "http://localhost:3000/success",
-//     cancel_url: "http://localhost:3000/cancel",
-//   });
-
-//   return NextResponse.json({ url: session.url });
-// }
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json();
+    
+    // Integrate with your payment gateway (Stripe, PayPal, etc.)
+    // Example with Stripe:
+    // const paymentIntent = await stripe.paymentIntents.create({...});
+    
+    // For demo purposes, simulate successful payment
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    return NextResponse.json({
+      success: true,
+      transactionId: `CC-${Date.now()}`,
+      message: 'Payment processed successfully'
+    });
+  } catch (error) {
+    return NextResponse.json(
+      { success: false, message: 'Credit card payment failed' },
+      { status: 400 }
+    );
+  }
+}

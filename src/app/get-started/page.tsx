@@ -20,40 +20,57 @@ export default function GetStartedPage({
   const [activeMethod, setActiveMethod] = useState<string | null>(null);
   const [formData, setFormData] = useState<Record<string, string>>({});
   const [isProcessing, setIsProcessing] = useState(false);
+  const [paymentStatus, setPaymentStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [transactionId, setTransactionId] = useState('');
 
   const headingColor = theme === "dark" ? "text-white" : "text-gray-900";
   const textColor = theme === "dark" ? "text-gray-300" : "text-gray-700";
   const borderColor = theme === "dark" ? "border-gray-700" : "border-gray-200";
   const cardBg = theme === "dark" ? "bg-gray-800" : "bg-gray-50";
 
-  const handleChange = (field: string, value: string) => {
+  const handlePaymentSuccess = (txId: string) => {
+    setPaymentStatus('success');
+    setTransactionId(txId);
+    // Redirect to success page or show success message
+    alert(`Payment successful! Welcome to ${title}. Transaction ID: ${txId}`);
+  };
+
+  const handlePaymentError = (error: string) => {
+    setPaymentStatus('error');
+    alert(`Payment failed: ${error}`);
+  };
+
+  const handleFormDataChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handlePayment = async () => {
+  // This function will be called by the main Enroll button
+  const handleEnrollPayment = async () => {
     if (!activeMethod) {
       alert("Please select a payment method before proceeding.");
       return;
     }
-    
+
     setIsProcessing(true);
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    alert(
-      `Payment successful! Welcome to ${title}.\nDetails: ${JSON.stringify(
-        formData,
-        null,
-        2
-      )}`
-    );
-    setIsProcessing(false);
+
+    try {
+      // Simulate payment processing
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // For demo purposes, simulate successful payment
+      const transactionId = `TX-${Date.now()}-${activeMethod}`;
+      handlePaymentSuccess(transactionId);
+      
+    } catch (error) {
+      handlePaymentError('Payment processing failed. Please try again.');
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   return (
     <SubPageLayout>
-      <section
-        className={`px-4 sm:px-6 lg:px-8 py-12`}
-      >
+      <section className={`px-4 sm:px-6 lg:px-8 py-12`}>
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <h1 className={`text-4xl md:text-5xl font-bold mb-4 ${headingColor}`}>
@@ -65,6 +82,7 @@ export default function GetStartedPage({
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
+            {/* Left Side - Payment Section */}
             <div className="lg:col-span-2">
               <div className={`rounded-2xl p-8 ${cardBg} border ${borderColor} shadow-lg`}>
                 <h3 className={`text-2xl font-bold mb-6 ${headingColor}`}>
@@ -79,11 +97,23 @@ export default function GetStartedPage({
                   features={features}
                 />
 
-                <PaymentMethods />
+                <PaymentMethods
+                  price={price}
+                  serviceTitle={title}
+                  onPaymentSuccess={handlePaymentSuccess}
+                  onPaymentError={handlePaymentError}
+                  formData={formData}
+                  // Pass these props to PaymentMethods so it can update the active method
+                  activeMethod={activeMethod}
+                  setActiveMethod={setActiveMethod}
+                  onFormDataChange={handleFormDataChange}
+                  setFormData={setFormData}
+                />
 
+                {/* SINGLE Enroll Button - This is the main payment button */}
                 <Button 
-                  onClick={handlePayment} 
-                  className="w-full py-4 text-lg font-semibold mt-4"
+                  onClick={handleEnrollPayment} 
+                  className="w-full py-4 text-lg font-semibold mt-6"
                   disabled={isProcessing || !activeMethod}
                 >
                   {isProcessing ? (
@@ -108,6 +138,7 @@ export default function GetStartedPage({
               </div>
             </div>
 
+            {/* Right Side - Service Details */}
             <ServiceDetails
               title={title} 
               description={description} 
