@@ -9,12 +9,12 @@ export const brokers = [
     name: "Exness",
     description: "Trusted forex broker with competitive spreads and fast execution.",
     image: "/brokers/exness.jpeg",
-    link: "https://partners.deriv.com/rx?ca=1069524e30dbb2&utm_campaign=dynamicworks&utm_medium=affiliate&utm_source=CU32294",
+    link: "https://one.exnessonelink.com/a/7buzu3nlvl",
   },
   {
     name: "Weltrade",
     description: "Trusted broker offering flexible accounts and fast execution.",
     image: "/brokers/weltrade.png",
-    link: "https://partners.deriv.com/rx?ca=1069524e30dbb2&utm_campaign=dynamicworks&utm_medium=affiliate&utm_source=CU32294",
+    link: "https://track.gowt.me/visit/?bta=47316&brand=weltrade",
   },
 ];
