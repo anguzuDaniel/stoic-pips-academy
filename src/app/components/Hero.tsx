@@ -42,7 +42,9 @@ export default function Hero() {
     : "border-blue-500 text-blue-600 hover:bg-blue-500/20";
 
   return (
-    <section className={`relative min-h-screen flex items-center justify-center overflow-hidden transition-all duration-700 ${
+    <section 
+  style={{ paddingTop: 'var(--navbar-height, 80px)' }}
+  className={`relative min-h-screen flex items-center justify-center overflow-hidden transition-all duration-700 ${
       theme === "dark" 
         ? "bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900" 
         : "bg-gradient-to-br from-white via-blue-50 to-purple-50"
@@ -52,7 +54,7 @@ export default function Hero() {
       
       <div className="relative z-10 max-w-6xl mx-auto px-6 lg:px-8 xl:px-12 flex flex-col items-center text-center">
         
-        {/* Badge */}
+        {/* Badge
         <div className={`mb-8 px-4 py-2 rounded-full border backdrop-blur-sm transition-all duration-500 ${
           theme === "dark" 
             ? "border-purple-500/30 bg-purple-500/10 text-purple-200" 
@@ -61,7 +63,7 @@ export default function Hero() {
           <span className={`${inter.className} text-sm font-medium tracking-wide`}>
             🚀 Premium Trading Education
           </span>
-        </div>
+        </div> */}
 
         {/* Main Heading */}
         <div className="space-y-4 mb-8">
