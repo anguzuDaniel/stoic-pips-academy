@@ -5,8 +5,8 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import Button from "../button/Button";
 import { services } from "@/data/services";
-import { Service } from "./Service";
 import { Playfair_Display, Inter } from "next/font/google";
+import { Service } from "./Service";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -172,7 +172,9 @@ export default function PricingServices() {
                           ? "bg-purple-500/20 border border-purple-500/30"
                           : "bg-blue-500/20 border border-blue-500/30"
                       } ${isHovered ? 'scale-110' : ''}`}>
-                        <span className="text-2xl">{service.icon || "🚀"}</span>
+                          <span className="text-2xl">
+                            {service.icon ? <service.icon size={24} color={service.iconColor} /> : "🚀"}
+                          </span>
                       </div>
                       
                       <h3 className={`text-xl font-bold mb-3 transition-colors duration-300 ${inter.className} ${
