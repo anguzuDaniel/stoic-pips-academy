@@ -1,3 +1,5 @@
+import { IconType } from "react-icons";
+
 export interface Service {
   id: string;
   title: string;
@@ -5,4 +7,6 @@ export interface Service {
   price: string;
   originalPrice?: string;
   features: string[];
+  icon: IconType;
+  iconColor: string;
 }

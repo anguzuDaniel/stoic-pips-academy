@@ -1,10 +1,17 @@
+import { IconBase } from "react-icons";
+import { 
+  FaUsers, 
+  FaUserTie, 
+  FaBell, 
+  FaChartLine, 
+  FaRobot 
+} from "react-icons/fa";
 import { Service } from "./Service";
 
 export const services: Record<string, Service> = {
   "group-mentorship": {
     title: "Group Mentorship",
-    description:
-      "Structured trading guidance from beginner to pro with group sessions.",
+    description: "Structured trading guidance from beginner to pro with group sessions.",
     price: "$100",
     originalPrice: "$299",
     features: [
@@ -13,6 +20,8 @@ export const services: Record<string, Service> = {
       "Price Action Mastery",
       "Supply & Demand Training",
     ],
+    icon: FaUsers,
+    iconColor: "#3B82F6", // Blue
   },
   "1on1-mentorship": {
     title: "1-on-1 Mentorship",
@@ -25,6 +34,8 @@ export const services: Record<string, Service> = {
       "Lifetime Access",
       "Custom Strategy Guidance",
     ],
+    icon: FaUserTie,
+    iconColor: "#10B981", // Green
   },
   "signals": {
     title: "Signals",
@@ -37,14 +48,21 @@ export const services: Record<string, Service> = {
       "Forex Pairs",
       "Telegram Access",
     ],
+    icon: FaBell,
+    iconColor: "#F59E0B", // Amber
   },
   "account-management": {
     title: "Account Management",
-    description:
-      "We manage your account with professional low-risk strategies.",
+    description: "We manage your account with professional low-risk strategies.",
     price: "$500",
     originalPrice: "$699",
-    features: ["Full Management", "Low-Risk Strategy", "Weekly Reports"],
+    features: [
+      "Full Management", 
+      "Low-Risk Strategy", 
+      "Weekly Reports"
+    ],
+    icon: FaChartLine,
+    iconColor: "#8B5CF6", // Purple
   },
   "robot-building": {
     title: "Robot Building",
@@ -57,5 +75,7 @@ export const services: Record<string, Service> = {
       "Installation Support",
       "Lifetime Updates",
     ],
+    icon: FaRobot,
+    iconColor: "#EF4444", // Red
   },
 };

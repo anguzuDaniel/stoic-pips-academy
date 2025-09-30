@@ -1,12 +1,23 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Service } from "@/data/Service";
 import PriceSummary from "./components/PriceSummary";
 import ServiceDetails from "./components/ServiceDetails";
 import SubPageLayout from "../components/layout/SubPageLayout";
 import TronPayment from "./components/TronPayment";
+import { Playfair_Display, Inter } from "next/font/google";
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["700", "900"],
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
+});
 
 // Add default values in case props are undefined
 const defaultService: Partial<Service> = {
@@ -27,11 +38,18 @@ export default function GetStartedPage({
   price,
   originalPrice,
   features,
+  icon,
+  iconColor
 }: Service) {
   const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
   const [formData, setFormData] = useState<Record<string, string>>({});
   const [paymentStatus, setPaymentStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [transactionId, setTransactionId] = useState('');
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Use default values if props are undefined
   const safeTitle = title || defaultService.title || "Trading Course";
@@ -40,10 +58,41 @@ export default function GetStartedPage({
   const safeFeatures = features || defaultService.features || [];
   const safeOriginalPrice = originalPrice;
 
+  if (!mounted) {
+    return (
+      <SubPageLayout>
+        <section className="px-4 sm:px-6 lg:px-8 py-24 bg-white dark:bg-gray-900 animate-pulse">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-12">
+              <div className="h-12 bg-gray-200 dark:bg-gray-700 rounded-2xl max-w-md mx-auto mb-4"></div>
+              <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded max-w-2xl mx-auto"></div>
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              <div className="lg:col-span-2 h-96 bg-gray-200 dark:bg-gray-700 rounded-2xl"></div>
+              <div className="h-96 bg-gray-200 dark:bg-gray-700 rounded-2xl"></div>
+            </div>
+          </div>
+        </section>
+      </SubPageLayout>
+    );
+  }
+
+  const sectionBg = theme === "dark" 
+    ? "bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900" 
+    : "bg-gradient-to-br from-white via-blue-50 to-purple-50";
+
   const headingColor = theme === "dark" ? "text-white" : "text-gray-900";
-  const textColor = theme === "dark" ? "text-gray-300" : "text-gray-700";
+  const textColor = theme === "dark" ? "text-gray-300" : "text-gray-600";
   const borderColor = theme === "dark" ? "border-gray-700" : "border-gray-200";
-  const cardBg = theme === "dark" ? "bg-gray-800" : "bg-gray-50";
+  const cardBg = theme === "dark" ? "bg-gray-800/50 backdrop-blur-sm" : "bg-white/80 backdrop-blur-sm";
+
+  const gradientText = theme === "dark" 
+    ? "bg-gradient-to-r from-purple-400 via-pink-400 to-red-400"
+    : "bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600";
+
+  const buttonGradient = theme === "dark"
+    ? "bg-gradient-to-r from-purple-500 to-pink-500"
+    : "bg-gradient-to-r from-blue-500 to-purple-600";
 
   const handlePaymentSuccess = (txId: string) => {
     setPaymentStatus('success');
@@ -66,23 +115,51 @@ export default function GetStartedPage({
 
   return (
     <SubPageLayout>
-      <section className={`px-4 sm:px-6 lg:px-8 py-12`}>
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h1 className={`text-4xl md:text-5xl font-bold mb-4 ${headingColor}`}>
-              Join Stoic Pips Academy
+      <section className={`px-4 sm:px-6 lg:px-8 py-24 transition-all duration-700 ${sectionBg}`}>
+        {/* Background Elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className={`absolute top-1/4 -left-20 w-80 h-80 rounded-full blur-3xl opacity-10 ${
+            theme === "dark" ? "bg-purple-500" : "bg-blue-400"
+          }`} />
+          <div className={`absolute bottom-1/4 -right-20 w-96 h-96 rounded-full blur-3xl opacity-10 ${
+            theme === "dark" ? "bg-pink-500" : "bg-purple-400"
+          }`} />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto z-10">
+          {/* Header Section */}
+          <div className="text-center mb-16">
+            {/* Section Badge */}
+            <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full border backdrop-blur-sm mb-6 ${
+              theme === "dark"
+                ? "border-purple-500/30 bg-purple-500/10 text-purple-200"
+                : "border-blue-500/30 bg-blue-500/10 text-blue-700"
+            }`}>
+              <span className="w-2 h-2 bg-current rounded-full animate-pulse"></span>
+              <span className={`text-sm font-medium ${inter.className}`}>Complete Enrollment</span>
+            </div>
+
+            <h1 className={`${playfair.className} text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight ${headingColor}`}>
+              Join{" "}
+              <span className={`bg-clip-text text-transparent ${gradientText}`}>
+                Stoic Pips
+              </span>{" "}
+              Academy
             </h1>
-            <p className={`text-lg ${textColor} max-w-2xl mx-auto`}>
-              Complete your enrollment and start your trading journey
+            <p className={`max-w-2xl mx-auto text-lg md:text-xl leading-relaxed ${inter.className} ${textColor}`}>
+              Complete your enrollment and start your journey to trading mastery
             </p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
             {/* Left Side - Payment Section */}
             <div className="lg:col-span-2">
-              <div className={`rounded-2xl p-8 ${cardBg} border ${borderColor} shadow-lg`}>
-                <h3 className={`text-2xl font-bold mb-6 ${headingColor}`}>
-                  Complete Payment
+              <div className={`rounded-3xl p-8 border-2 backdrop-blur-sm ${cardBg} ${borderColor} shadow-2xl`}>
+                <h3 className={`${playfair.className} text-2xl md:text-3xl font-bold mb-6 ${headingColor}`}>
+                  Complete Your{" "}
+                  <span className={`bg-clip-text text-transparent ${gradientText}`}>
+                    Payment
+                  </span>
                 </h3>
 
                 <PriceSummary 
@@ -91,60 +168,82 @@ export default function GetStartedPage({
                   price={safePrice}
                   originalPrice={safeOriginalPrice}
                   features={safeFeatures}
+                  icon={icon}
+                  iconColor={iconColor}
                 />
 
                 {/* Customer Information Form */}
-                <div className="mb-8 p-6 border border-gray-200 dark:border-gray-700 rounded-xl">
-                  <h4 className={`text-lg font-semibold mb-4 ${headingColor}`}>
+                <div className={`mb-8 p-6 rounded-2xl border-2 backdrop-blur-sm ${
+                  theme === "dark" 
+                    ? "bg-gray-800/30 border-gray-700" 
+                    : "bg-white/60 border-gray-200"
+                }`}>
+                  <h4 className={`text-xl font-bold mb-4 ${inter.className} ${headingColor}`}>
                     Your Information
                   </h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className={`block mb-2 text-sm font-medium ${textColor}`}>
+                      <label className={`block mb-2 text-sm font-medium ${inter.className} ${textColor}`}>
                         Full Name *
                       </label>
                       <input
                         type="text"
                         value={formData.name || ""}
                         onChange={(e) => handleFormDataChange('name', e.target.value)}
-                        className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className={`w-full p-3 rounded-xl border-2 ${inter.className} ${
+                          theme === "dark" 
+                            ? "border-gray-600 bg-gray-700/50 text-white placeholder-gray-400 focus:border-purple-500" 
+                            : "border-gray-300 bg-white/80 text-gray-900 placeholder-gray-500 focus:border-blue-500"
+                        } focus:outline-none focus:ring-2 focus:ring-opacity-20 transition-all duration-300`}
                         placeholder="John Doe"
                         required
                       />
                     </div>
                     <div>
-                      <label className={`block mb-2 text-sm font-medium ${textColor}`}>
+                      <label className={`block mb-2 text-sm font-medium ${inter.className} ${textColor}`}>
                         Email Address *
                       </label>
                       <input
                         type="email"
                         value={formData.email || ""}
                         onChange={(e) => handleFormDataChange('email', e.target.value)}
-                        className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className={`w-full p-3 rounded-xl border-2 ${inter.className} ${
+                          theme === "dark" 
+                            ? "border-gray-600 bg-gray-700/50 text-white placeholder-gray-400 focus:border-purple-500" 
+                            : "border-gray-300 bg-white/80 text-gray-900 placeholder-gray-500 focus:border-blue-500"
+                        } focus:outline-none focus:ring-2 focus:ring-opacity-20 transition-all duration-300`}
                         placeholder="john@example.com"
                         required
                       />
                     </div>
                     <div>
-                      <label className={`block mb-2 text-sm font-medium ${textColor}`}>
+                      <label className={`block mb-2 text-sm font-medium ${inter.className} ${textColor}`}>
                         Phone Number (Optional)
                       </label>
                       <input
                         type="tel"
                         value={formData.phone || ""}
                         onChange={(e) => handleFormDataChange('phone', e.target.value)}
-                        className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className={`w-full p-3 rounded-xl border-2 ${inter.className} ${
+                          theme === "dark" 
+                            ? "border-gray-600 bg-gray-700/50 text-white placeholder-gray-400 focus:border-purple-500" 
+                            : "border-gray-300 bg-white/80 text-gray-900 placeholder-gray-500 focus:border-blue-500"
+                        } focus:outline-none focus:ring-2 focus:ring-opacity-20 transition-all duration-300`}
                         placeholder="+256 712 345 678"
                       />
                     </div>
                     <div>
-                      <label className={`block mb-2 text-sm font-medium ${textColor}`}>
+                      <label className={`block mb-2 text-sm font-medium ${inter.className} ${textColor}`}>
                         Country
                       </label>
                       <select
                         value={formData.country || ""}
                         onChange={(e) => handleFormDataChange('country', e.target.value)}
-                        className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className={`w-full p-3 rounded-xl border-2 ${inter.className} ${
+                          theme === "dark" 
+                            ? "border-gray-600 bg-gray-700/50 text-white focus:border-purple-500" 
+                            : "border-gray-300 bg-white/80 text-gray-900 focus:border-blue-500"
+                        } focus:outline-none focus:ring-2 focus:ring-opacity-20 transition-all duration-300`}
                       >
                         <option value="">Select your country</option>
                         <option value="UG">Uganda</option>
@@ -157,8 +256,14 @@ export default function GetStartedPage({
                   </div>
                   
                   {!isFormValid() && (
-                    <div className="mt-4 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
-                      <p className="text-yellow-700 dark:text-yellow-300 text-sm">
+                    <div className={`mt-4 p-4 rounded-xl border-2 ${
+                      theme === "dark" 
+                        ? "bg-yellow-900/20 border-yellow-700/50" 
+                        : "bg-yellow-50 border-yellow-200"
+                    }`}>
+                      <p className={`text-sm ${inter.className} ${
+                        theme === "dark" ? "text-yellow-300" : "text-yellow-700"
+                      }`}>
                         💡 Please fill in your name and email to see payment options.
                       </p>
                     </div>
@@ -179,14 +284,22 @@ export default function GetStartedPage({
 
                 {/* Payment Status Display */}
                 {paymentStatus === 'success' && (
-                  <div className="mt-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
-                    <div className="flex items-center space-x-2">
-                      <span className="text-green-600 dark:text-green-400 text-xl">✅</span>
+                  <div className={`mt-6 p-6 rounded-2xl border-2 ${
+                    theme === "dark" 
+                      ? "bg-green-900/20 border-green-700/50" 
+                      : "bg-green-50 border-green-200"
+                  }`}>
+                    <div className="flex items-center space-x-3">
+                      <span className="text-green-600 dark:text-green-400 text-2xl">✅</span>
                       <div>
-                        <p className="text-green-800 dark:text-green-300 font-semibold">
+                        <p className={`font-bold ${inter.className} ${
+                          theme === "dark" ? "text-green-300" : "text-green-800"
+                        }`}>
                           Tron Payment Instructions Ready!
                         </p>
-                        <p className="text-green-700 dark:text-green-400 text-sm">
+                        <p className={`text-sm ${inter.className} ${
+                          theme === "dark" ? "text-green-400" : "text-green-700"
+                        }`}>
                           Please complete the payment using the Tron instructions above.
                           Access will be granted within 30 minutes of payment confirmation.
                         </p>
@@ -196,14 +309,22 @@ export default function GetStartedPage({
                 )}
 
                 {paymentStatus === 'error' && (
-                  <div className="mt-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
-                    <div className="flex items-center space-x-2">
-                      <span className="text-red-600 dark:text-red-400 text-xl">❌</span>
+                  <div className={`mt-6 p-6 rounded-2xl border-2 ${
+                    theme === "dark" 
+                      ? "bg-red-900/20 border-red-700/50" 
+                      : "bg-red-50 border-red-200"
+                  }`}>
+                    <div className="flex items-center space-x-3">
+                      <span className="text-red-600 dark:text-red-400 text-2xl">❌</span>
                       <div>
-                        <p className="text-red-800 dark:text-red-300 font-semibold">
+                        <p className={`font-bold ${inter.className} ${
+                          theme === "dark" ? "text-red-300" : "text-red-800"
+                        }`}>
                           Payment Setup Failed
                         </p>
-                        <p className="text-red-700 dark:text-red-400 text-sm">
+                        <p className={`text-sm ${inter.className} ${
+                          theme === "dark" ? "text-red-400" : "text-red-700"
+                        }`}>
                           Please refresh the page and try again.
                         </p>
                       </div>
@@ -211,20 +332,35 @@ export default function GetStartedPage({
                   </div>
                 )}
 
-                <div className="mt-6 text-center">
-                  <p className={`text-sm ${textColor} flex items-center justify-center`}>
-                    <span className="mr-2">Ⓣ</span>
-                    Pay with Tron (TRX/USDT) - Fast & Low Fees
-                  </p>
-                  <p className={`text-xs mt-2 ${textColor} opacity-75`}>
-                    7-day money-back guarantee • Instant access upon payment confirmation
+                <div className="mt-8 text-center">
+                  <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full border backdrop-blur-sm mb-4 ${
+                    theme === "dark"
+                      ? "border-purple-500/30 bg-purple-500/10 text-purple-200"
+                      : "border-blue-500/30 bg-blue-500/10 text-blue-700"
+                  }`}>
+                    <span className="text-lg">Ⓣ</span>
+                    <span className={`text-sm font-medium ${inter.className}`}>Pay with Tron (TRX/USDT)</span>
+                  </div>
+                  <p className={`text-sm ${inter.className} ${textColor} mb-4`}>
+                    Fast & Low Fees • 7-day money-back guarantee • Instant access
                   </p>
                   
                   {/* Support Info */}
-                  <div className="mt-4 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                  <div className={`p-4 rounded-2xl backdrop-blur-sm border ${
+                    theme === "dark" 
+                      ? "bg-gray-800/30 border-gray-700" 
+                      : "bg-white/60 border-gray-200"
+                  }`}>
+                    <p className={`text-sm ${inter.className} ${
+                      theme === "dark" ? "text-gray-400" : "text-gray-600"
+                    }`}>
                       Need help with Tron payment? Contact:{' '}
-                      <a href="mailto:support@stoicpips.com" className="text-blue-600 dark:text-blue-400 hover:underline">
+                      <a 
+                        href="mailto:support@stoicpips.com" 
+                        className={`font-semibold hover:underline ${
+                          theme === "dark" ? "text-purple-400" : "text-blue-600"
+                        }`}
+                      >
                         support@stoicpips.com
                       </a>
                     </p>
@@ -240,6 +376,8 @@ export default function GetStartedPage({
               price={safePrice}
               originalPrice={safeOriginalPrice}
               features={safeFeatures}
+              icon={icon}
+              iconColor={iconColor}
             />
           </div>
         </div>
