@@ -184,7 +184,7 @@ export default function ContactForm() {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           rows={5}
-          className={inputClasses}
+          className={`${inputClasses} resize-none`} // Add resize-none here
           placeholder="Tell us about your trading goals and how we can help you..."
           required
           disabled={isSubmitting}
