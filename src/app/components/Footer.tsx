@@ -3,7 +3,7 @@
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { EnvelopeIcon } from "@heroicons/react/24/solid";
-import { FaTelegramPlane, FaWhatsapp } from "react-icons/fa";
+import { FaTelegramPlane, FaWhatsapp, FaYoutube } from "react-icons/fa";
 import { Playfair_Display, Inter } from "next/font/google";
 
 const playfair = Playfair_Display({
@@ -83,46 +83,40 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Contact Links */}
-          <div className="flex flex-col sm:flex-row items-center gap-6">
+          <div className="flex flex-col sm:flex-row items-center gap-4">
             <a
-              href="mailto:info@stoicpips.com"
-              className={`group flex items-center gap-3 px-4 py-3 rounded-2xl backdrop-blur-sm border transition-all duration-300 hover:scale-105 ${
-                theme === "dark"
-                  ? "border-purple-500/30 bg-purple-500/10 text-purple-200 hover:bg-purple-500/20"
-                  : "border-blue-500/30 bg-blue-500/10 text-blue-700 hover:bg-blue-500/20"
-              }`}
+              href="mailto:stoicpips@gmail.com"
+              className="flex items-center gap-2 hover:text-blue-500 transition-colors"
             >
               <EnvelopeIcon className="w-5 h-5" />
-              <span className={`font-medium ${inter.className}`}>Email Us</span>
+              Email
             </a>
-            
             <a
-              href="https://t.me/YourTelegramUsername"
+              href="https://www.youtube.com/channel/UCyYDnMSj6e1rTdOvn7whuvw"
               target="_blank"
               rel="noopener noreferrer"
-              className={`group flex items-center gap-3 px-4 py-3 rounded-2xl backdrop-blur-sm border transition-all duration-300 hover:scale-105 ${
-                theme === "dark"
-                  ? "border-blue-500/30 bg-blue-500/10 text-blue-200 hover:bg-blue-500/20"
-                  : "border-blue-500/30 bg-blue-500/10 text-blue-700 hover:bg-blue-500/20"
-              }`}
+              className="flex items-center gap-2 hover:text-red-500 transition-colors"
+            >
+              <FaYoutube className="w-5 h-5" />
+              YouTube
+            </a>
+            <a
+              href="https://t.me/+Syr6WpolrV1iZjhk"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 hover:text-blue-500 transition-colors"
             >
               <FaTelegramPlane className="w-5 h-5" />
-              <span className={`font-medium ${inter.className}`}>Telegram</span>
+              Telegram
             </a>
-            
             <a
-              href="https://wa.me/YourWhatsAppNumber"
+              href="https://wa.me/+256706045809"
               target="_blank"
               rel="noopener noreferrer"
-              className={`group flex items-center gap-3 px-4 py-3 rounded-2xl backdrop-blur-sm border transition-all duration-300 hover:scale-105 ${
-                theme === "dark"
-                  ? "border-green-500/30 bg-green-500/10 text-green-200 hover:bg-green-500/20"
-                  : "border-green-500/30 bg-green-500/10 text-green-700 hover:bg-green-500/20"
-              }`}
+              className="flex items-center gap-2 hover:text-green-500 transition-colors"
             >
               <FaWhatsapp className="w-5 h-5" />
-              <span className={`font-medium ${inter.className}`}>WhatsApp</span>
+              WhatsApp
             </a>
           </div>
         </div>
