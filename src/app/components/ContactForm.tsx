@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useTheme } from "next-themes";
 import { Inter } from "next/font/google";
 
@@ -11,32 +11,28 @@ const inter = Inter({
 
 export default function ContactForm() {
   const { theme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    service: "",
-    message: "",
-  });
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [service, setService] = useState("");
+  const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"success" | "error" | null>(null);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const currentTheme = theme || 'light';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus(null);
+
+    const formData = {
+      name,
+      email,
+      phone,
+      service,
+      message,
+    };
 
     try {
       const response = await fetch("/api/send-email", {
@@ -49,13 +45,11 @@ export default function ContactForm() {
 
       if (response.ok) {
         setSubmitStatus("success");
-        setFormData({
-          name: "",
-          email: "",
-          phone: "",
-          service: "",
-          message: "",
-        });
+        setName("");
+        setEmail("");
+        setPhone("");
+        setService("");
+        setMessage("");
       } else {
         setSubmitStatus("error");
       }
@@ -66,9 +60,7 @@ export default function ContactForm() {
     }
   };
 
-  // Use a default theme until component mounts
-  const currentTheme = mounted ? theme : 'light';
-
+  // Input classes with the previous color scheme
   const inputClasses = `w-full p-3 rounded-xl border-2 ${inter.className} ${
     currentTheme === "dark" 
       ? "border-gray-600 bg-gray-700/50 text-white placeholder-gray-400 focus:border-purple-500" 
@@ -79,23 +71,11 @@ export default function ContactForm() {
     currentTheme === "dark" ? "text-gray-300" : "text-gray-700"
   }`;
 
-  // Show loading state until mounted
-  if (!mounted) {
-    return (
-      <div className="space-y-6 animate-pulse">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="h-16 bg-gray-200 dark:bg-gray-700 rounded-xl"></div>
-          <div className="h-16 bg-gray-200 dark:bg-gray-700 rounded-xl"></div>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="h-16 bg-gray-200 dark:bg-gray-700 rounded-xl"></div>
-          <div className="h-16 bg-gray-200 dark:bg-gray-700 rounded-xl"></div>
-        </div>
-        <div className="h-32 bg-gray-200 dark:bg-gray-700 rounded-xl"></div>
-        <div className="h-12 bg-gray-200 dark:bg-gray-700 rounded-2xl"></div>
-      </div>
-    );
-  }
+  const buttonClasses = `w-full py-4 rounded-2xl font-semibold text-white transition-all duration-300 ${
+    currentTheme === "dark"
+      ? "bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
+      : "bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
+  } ${isSubmitting ? "opacity-50 cursor-not-allowed" : "hover:scale-105"} ${inter.className}`;
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
@@ -129,11 +109,12 @@ export default function ContactForm() {
             type="text"
             id="name"
             name="name"
-            value={formData.name}
-            onChange={handleChange}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             className={inputClasses}
             placeholder="John Doe"
             required
+            disabled={isSubmitting}
           />
         </div>
 
@@ -145,11 +126,12 @@ export default function ContactForm() {
             type="email"
             id="email"
             name="email"
-            value={formData.email}
-            onChange={handleChange}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className={inputClasses}
             placeholder="john@example.com"
             required
+            disabled={isSubmitting}
           />
         </div>
       </div>
@@ -163,10 +145,11 @@ export default function ContactForm() {
             type="tel"
             id="phone"
             name="phone"
-            value={formData.phone}
-            onChange={handleChange}
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
             className={inputClasses}
             placeholder="+256 712 345 678"
+            disabled={isSubmitting}
           />
         </div>
 
@@ -177,9 +160,10 @@ export default function ContactForm() {
           <select
             id="service"
             name="service"
-            value={formData.service}
-            onChange={handleChange}
+            value={service}
+            onChange={(e) => setService(e.target.value)}
             className={inputClasses}
+            disabled={isSubmitting}
           >
             <option value="">Select a service</option>
             <option value="Mentorship Program">Mentorship Program</option>
@@ -197,23 +181,20 @@ export default function ContactForm() {
         <textarea
           id="message"
           name="message"
-          value={formData.message}
-          onChange={handleChange}
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
           rows={5}
           className={inputClasses}
           placeholder="Tell us about your trading goals and how we can help you..."
           required
+          disabled={isSubmitting}
         />
       </div>
 
       <button
         type="submit"
         disabled={isSubmitting}
-        className={`w-full py-4 rounded-2xl font-semibold text-white transition-all duration-300 ${
-          currentTheme === "dark"
-            ? "bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
-            : "bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
-        } ${isSubmitting ? "opacity-50 cursor-not-allowed" : "hover:scale-105"} ${inter.className}`}
+        className={buttonClasses}
       >
         {isSubmitting ? (
           <span className="flex items-center justify-center">
