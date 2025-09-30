@@ -3,6 +3,17 @@
 import { useTheme } from "next-themes";
 import { useState, useEffect } from "react";
 import ContactForm from "./ContactForm";
+import { Playfair_Display, Inter } from "next/font/google";
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["700", "900"],
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
+});
 
 export default function ContactCTA() {
   const { theme } = useTheme();
@@ -16,20 +27,28 @@ export default function ContactCTA() {
 
   const sectionBg = currentTheme === "dark" 
     ? "bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900" 
-    : "bg-gradient-to-br from-blue-50 via-white to-purple-50";
+    : "bg-gradient-to-br from-white via-blue-50 to-purple-50";
+
+  const gradientText = currentTheme === "dark" 
+    ? "bg-gradient-to-r from-purple-400 via-pink-400 to-red-400"
+    : "bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600";
+
+  const buttonGradient = currentTheme === "dark"
+    ? "bg-gradient-to-r from-purple-500 to-pink-500"
+    : "bg-gradient-to-r from-blue-500 to-purple-600";
 
   if (!mounted) {
     return (
-      <section className="min-h-screen flex items-center justify-center py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
+      <section className="min-h-screen flex items-center justify-center py-20 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-900">
         <div className="max-w-4xl mx-auto w-full text-center">
-          <div className="h-12 bg-gray-200 rounded-2xl max-w-md mx-auto mb-6 animate-pulse"></div>
-          <div className="h-6 bg-gray-200 rounded-xl max-w-2xl mx-auto mb-16"></div>
-          <div className="bg-white/80 backdrop-blur-xl rounded-3xl p-8 border border-white/20 shadow-2xl animate-pulse">
+          <div className="h-12 bg-gray-200 dark:bg-gray-700 rounded-2xl max-w-md mx-auto mb-6 animate-pulse"></div>
+          <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded-xl max-w-2xl mx-auto mb-16"></div>
+          <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-3xl p-8 border border-white/20 dark:border-gray-700/50 shadow-2xl animate-pulse">
             <div className="space-y-4">
-              <div className="h-12 bg-gray-200 rounded-xl"></div>
-              <div className="h-12 bg-gray-200 rounded-xl"></div>
-              <div className="h-32 bg-gray-200 rounded-xl"></div>
-              <div className="h-12 bg-gray-200 rounded-xl"></div>
+              <div className="h-12 bg-gray-200 dark:bg-gray-700 rounded-xl"></div>
+              <div className="h-12 bg-gray-200 dark:bg-gray-700 rounded-xl"></div>
+              <div className="h-32 bg-gray-200 dark:bg-gray-700 rounded-xl"></div>
+              <div className="h-12 bg-gray-200 dark:bg-gray-700 rounded-xl"></div>
             </div>
           </div>
         </div>
@@ -40,83 +59,192 @@ export default function ContactCTA() {
   return (
     <section
       id="contact"
-      className={`min-h-screen flex items-center justify-center py-20 px-4 sm:px-6 lg:px-8 transition-all duration-700 ${sectionBg}`}
+      className={`relative min-h-screen flex items-center justify-center py-24 px-4 sm:px-6 lg:px-8 overflow-hidden transition-all duration-700 ${sectionBg}`}
     >
       {/* Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className={`absolute top-1/4 left-1/4 w-72 h-72 rounded-full blur-3xl opacity-10 ${
+          currentTheme === "dark" ? "bg-purple-500" : "bg-blue-400"
+        }`}></div>
+        <div className={`absolute bottom-1/4 right-1/4 w-72 h-72 rounded-full blur-3xl opacity-10 ${
+          currentTheme === "dark" ? "bg-pink-500" : "bg-purple-400"
+        }`}></div>
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-full blur-3xl"></div>
       </div>
 
-      <div className="max-w-4xl mx-auto w-full relative z-10">
+      <div className="relative max-w-7xl mx-auto w-full z-10">
         {/* Header Section */}
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-black/5 dark:bg-white/5 backdrop-blur-sm border border-black/10 dark:border-white/10 mb-8">
-            <span className="text-lg">💬</span>
-            <span className="text-sm font-medium text-gray-600 dark:text-gray-300">
-              LET'S CONNECT
-            </span>
+        <div className="text-center mb-20">
+          {/* Section Badge */}
+          <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full border backdrop-blur-sm mb-6 ${
+            currentTheme === "dark"
+              ? "border-purple-500/30 bg-purple-500/10 text-purple-200"
+              : "border-blue-500/30 bg-blue-500/10 text-blue-700"
+          }`}>
+            <span className="w-2 h-2 bg-current rounded-full animate-pulse"></span>
+            <span className={`text-sm font-medium ${inter.className}`}>Get In Touch</span>
           </div>
           
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 dark:from-white dark:via-gray-300 dark:to-white bg-clip-text text-transparent">
-            Start Your Journey
+          {/* Main Heading */}
+          <h1 className={`${playfair.className} text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight ${
+            currentTheme === "dark" ? "text-white" : "text-gray-900"
+          }`}>
+            Start Your{" "}
+            <span className={`bg-clip-text text-transparent ${gradientText}`}>
+              Trading Journey
+            </span>
           </h1>
           
-          <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed">
-            Ready to transform your trading? Let's discuss how we can help you achieve your financial goals.
+          {/* Subheading */}
+          <p className={`max-w-2xl mx-auto text-lg md:text-xl leading-relaxed ${inter.className} ${
+            currentTheme === "dark" ? "text-gray-300" : "text-gray-600"
+          }`}>
+            Ready to transform your trading? Let's discuss how we can help you achieve consistent profitability and financial freedom.
           </p>
         </div>
 
-        {/* Contact Form Container */}
-        <div className={`
-          relative rounded-3xl p-8 backdrop-blur-xl border transition-all duration-500 hover:shadow-2xl
-          ${currentTheme === "dark" 
-            ? "bg-gray-800/40 border-gray-700/50 hover:border-gray-600/50 shadow-xl" 
-            : "bg-white/60 border-white/30 hover:border-white/50 shadow-2xl"
-          }
-        `}>
-          {/* Decorative Corner Accents */}
-          <div className="absolute -top-2 -left-2 w-6 h-6 border-t-2 border-l-2 border-blue-500/50 rounded-tl-lg"></div>
-          <div className="absolute -top-2 -right-2 w-6 h-6 border-t-2 border-r-2 border-purple-500/50 rounded-tr-lg"></div>
-          <div className="absolute -bottom-2 -left-2 w-6 h-6 border-b-2 border-l-2 border-blue-500/50 rounded-bl-lg"></div>
-          <div className="absolute -bottom-2 -right-2 w-6 h-6 border-b-2 border-r-2 border-purple-500/50 rounded-br-lg"></div>
+        <div className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+          {/* Contact Info */}
+          <div className="space-y-8">
+            <div>
+              <h2 className={`text-3xl font-bold mb-4 ${playfair.className} ${
+                currentTheme === "dark" ? "text-white" : "text-gray-900"
+              }`}>
+                Why Choose Stoic Pips?
+              </h2>
+              <div className="space-y-4">
+                {[
+                  {
+                    icon: "🎯",
+                    title: "Proven Strategies",
+                    description: "Learn institutional trading methods that actually work"
+                  },
+                  {
+                    icon: "🧠",
+                    title: "Mindset Coaching",
+                    description: "Develop the discipline needed for consistent success"
+                  },
+                  {
+                    icon: "📈",
+                    title: "Live Mentorship",
+                    description: "Get personalized guidance from experienced traders"
+                  },
+                  {
+                    icon: "🤝",
+                    title: "Community Support",
+                    description: "Join a network of dedicated traders"
+                  }
+                ].map((item, index) => (
+                  <div key={index} className={`flex items-start gap-4 p-4 rounded-2xl backdrop-blur-sm border transition-all duration-300 ${
+                    currentTheme === "dark"
+                      ? "bg-gray-800/50 border-gray-700 hover:border-purple-500/30"
+                      : "bg-white/50 border-gray-200 hover:border-blue-500/30"
+                  }`}>
+                    <span className="text-2xl">{item.icon}</span>
+                    <div>
+                      <h3 className={`font-semibold mb-1 ${inter.className} ${
+                        currentTheme === "dark" ? "text-white" : "text-gray-900"
+                      }`}>
+                        {item.title}
+                      </h3>
+                      <p className={`text-sm ${inter.className} ${
+                        currentTheme === "dark" ? "text-gray-300" : "text-gray-600"
+                      }`}>
+                        {item.description}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
 
-          <ContactForm />
+            {/* Quick Contact */}
+            <div className={`p-6 rounded-3xl backdrop-blur-sm border ${
+              currentTheme === "dark"
+                ? "bg-gray-800/50 border-gray-700"
+                : "bg-white/50 border-gray-200"
+            }`}>
+              <h3 className={`text-xl font-bold mb-4 ${inter.className} ${
+                currentTheme === "dark" ? "text-white" : "text-gray-900"
+              }`}>
+                Quick Contact
+              </h3>
+              <div className="space-y-3">
+                <div className="flex items-center gap-3">
+                  <span className={`p-2 rounded-lg ${
+                    currentTheme === "dark" ? "bg-purple-500/20" : "bg-blue-500/20"
+                  }`}>
+                    📧
+                  </span>
+                  <div>
+                    <p className={`font-medium ${inter.className} ${
+                      currentTheme === "dark" ? "text-gray-200" : "text-gray-700"
+                    }`}>
+                      support@stoicpips.com
+                    </p>
+                    <p className={`text-sm ${currentTheme === "dark" ? "text-gray-400" : "text-gray-500"}`}>
+                      Email Support
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className={`p-2 rounded-lg ${
+                    currentTheme === "dark" ? "bg-pink-500/20" : "bg-purple-500/20"
+                  }`}>
+                    ⚡
+                  </span>
+                  <div>
+                    <p className={`font-medium ${inter.className} ${
+                      currentTheme === "dark" ? "text-gray-200" : "text-gray-700"
+                    }`}>
+                      24-48 Hour Response
+                    </p>
+                    <p className={`text-sm ${currentTheme === "dark" ? "text-gray-400" : "text-gray-500"}`}>
+                      Quick Replies
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Contact Form Container */}
+          <div className={`
+            relative rounded-3xl p-8 backdrop-blur-xl border-2 transition-all duration-500 hover:shadow-2xl
+            ${currentTheme === "dark" 
+              ? "bg-gray-800/50 border-gray-700 hover:border-purple-500/50 shadow-xl" 
+              : "bg-white/80 border-gray-200 hover:border-blue-500/50 shadow-2xl"
+            }
+          `}>
+            <ContactForm />
+          </div>
         </div>
 
-        {/* Additional Contact Info */}
-        <div className="text-center mt-12">
-          <div className={`inline-flex items-center gap-8 px-8 py-4 rounded-2xl backdrop-blur-sm border transition-all duration-300 ${
-            currentTheme === "dark" 
-              ? 'bg-gray-800/30 border-gray-700/50 hover:bg-gray-800/50' 
-              : 'bg-white/40 border-white/30 hover:bg-white/60'
+        {/* Bottom CTA */}
+        <div className="text-center mt-16">
+          <div className={`inline-flex flex-col sm:flex-row items-center gap-6 p-8 rounded-3xl backdrop-blur-sm border max-w-4xl mx-auto ${
+            currentTheme === "dark"
+              ? "bg-gray-800/50 border-gray-700"
+              : "bg-white/50 border-gray-200"
           }`}>
-            <div className="flex items-center gap-3">
-              <span className="text-2xl">📧</span>
-              <div className="text-left">
-                <p className={`text-sm font-medium ${currentTheme === "dark" ? 'text-gray-300' : 'text-gray-700'}`}>
-                  support@stoicpips.com
-                </p>
-                <p className={`text-xs ${currentTheme === "dark" ? 'text-gray-400' : 'text-gray-500'}`}>
-                  Email Support
-                </p>
-              </div>
+            <div className="text-left">
+              <h3 className={`text-xl font-bold mb-2 ${inter.className} ${
+                currentTheme === "dark" ? "text-white" : "text-gray-900"
+              }`}>
+                Ready to Transform Your Trading?
+              </h3>
+              <p className={`${inter.className} ${
+                currentTheme === "dark" ? "text-gray-300" : "text-gray-600"
+              }`}>
+                Join 2,000+ successful traders who changed their financial future.
+              </p>
             </div>
-            
-            <div className="w-px h-12 bg-gray-400/20"></div>
-            
-            <div className="flex items-center gap-3">
-              <span className="text-2xl">💬</span>
-              <div className="text-left">
-                <p className={`text-sm font-medium ${currentTheme === "dark" ? 'text-gray-300' : 'text-gray-700'}`}>
-                  24-48 Hour Response
-                </p>
-                <p className={`text-xs ${currentTheme === "dark" ? 'text-gray-400' : 'text-gray-500'}`}>
-                  Quick Replies
-                </p>
-              </div>
-            </div>
+            <a
+              href="#contact"
+              className={`px-8 py-3 rounded-2xl font-semibold text-white transition-all duration-300 hover:scale-105 ${buttonGradient}`}
+            >
+              Start Now
+            </a>
           </div>
         </div>
       </div>

@@ -13,7 +13,7 @@ const playfair = Playfair_Display({
 
 const inter = Inter({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["300", "400", "500", "600"],
 });
 
 export default function OurServices() {
@@ -24,47 +24,23 @@ export default function OurServices() {
     setMounted(true);
   }, []);
 
-  if (!mounted) {
-    return (
-      <section className="py-20 bg-white dark:bg-gray-800 animate-pulse">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <div className="h-12 bg-gray-300 dark:bg-gray-700 rounded w-1/3 mx-auto mb-4"></div>
-            <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-1/2 mx-auto"></div>
-          </div>
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {[...Array(3)].map((_, i) => (
-              <div key={i} className="h-80 bg-gray-300 dark:bg-gray-700 rounded-2xl"></div>
-            ))}
-          </div>
-        </div>
-      </section>
-    );
-  }
+  if (!mounted) return null;
+
+  const gradientText = theme === "dark" 
+    ? "bg-gradient-to-r from-purple-400 via-pink-400 to-red-400"
+    : "bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600";
 
   const sectionBg = theme === "dark" 
     ? "bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900" 
-    : "bg-gradient-to-br from-white via-blue-50/20 to-purple-50/10";
-  
-  const headingColor = theme === "dark" ? "text-white" : "text-gray-900";
-  const textColor = theme === "dark" ? "text-gray-300" : "text-gray-600";
+    : "bg-gradient-to-br from-white via-blue-50 to-purple-50";
+
+  const buttonGradient = theme === "dark"
+    ? "bg-gradient-to-r from-purple-500 to-pink-500"
+    : "bg-gradient-to-r from-blue-500 to-purple-600";
 
   return (
-    <section
-      id="services"
-      className={`relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden transition-all duration-700 ${sectionBg}`}
-    >
-      {/* Background Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className={`absolute top-1/4 -left-20 w-80 h-80 rounded-full blur-3xl opacity-10 ${
-          theme === "dark" ? "bg-purple-500" : "bg-blue-400"
-        }`} />
-        <div className={`absolute bottom-1/4 -right-20 w-96 h-96 rounded-full blur-3xl opacity-10 ${
-          theme === "dark" ? "bg-pink-500" : "bg-purple-400"
-        }`} />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-transparent to-gray-900/5 dark:to-gray-900/10" />
-      </div>
-
+    <section id="services" className={`relative py-24 px-4 sm:px-6 lg:px-8 ${sectionBg}`}>
+      
       <div className="relative max-w-7xl mx-auto">
         {/* Header Section */}
         <div className="text-center mb-20">
@@ -78,20 +54,18 @@ export default function OurServices() {
             <span className={`text-sm font-medium ${inter.className}`}>What We Offer</span>
           </div>
 
-          {/* Main Heading */}
-          <h2 className={`${playfair.className} text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight ${headingColor}`}>
+          <h2 className={`${playfair.className} text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight ${
+            theme === "dark" ? "text-white" : "text-gray-900"
+          }`}>
             Transform Your{" "}
-            <span className={`bg-clip-text text-transparent bg-gradient-to-r ${
-              theme === "dark"
-                ? "from-purple-400 via-pink-400 to-red-400"
-                : "from-blue-600 via-purple-600 to-pink-600"
-            }`}>
+            <span className={`bg-clip-text text-transparent ${gradientText}`}>
               Trading Journey
             </span>
           </h2>
 
-          {/* Subheading */}
-          <p className={`max-w-2xl mx-auto text-lg md:text-xl leading-relaxed ${textColor} ${inter.className}`}>
+          <p className={`max-w-2xl mx-auto text-lg leading-relaxed ${inter.className} ${
+            theme === "dark" ? "text-gray-300" : "text-gray-600"
+          }`}>
             Comprehensive trading education designed to take you from beginner to consistently 
             profitable trader with proven strategies and personalized mentorship.
           </p>
@@ -117,22 +91,20 @@ export default function OurServices() {
             theme === "dark"
               ? "bg-gray-800/50 border-gray-700"
               : "bg-white/50 border-gray-200"
-          } shadow-2xl`}>
+          }`}>
             <div className="text-left">
-              <h3 className={`text-xl font-bold mb-2 ${headingColor} ${inter.className}`}>
+              <h3 className={`text-xl font-bold mb-2 ${inter.className} ${
+                theme === "dark" ? "text-white" : "text-gray-900"
+              }`}>
                 Ready to Start Your Trading Success?
               </h3>
-              <p className={`${textColor} ${inter.className}`}>
+              <p className={theme === "dark" ? "text-gray-300" : "text-gray-600"}>
                 Join 2,000+ traders who transformed their results with our proven methods.
               </p>
             </div>
             <a
               href="/mentorship"
-              className={`px-8 py-3 rounded-2xl font-semibold text-white whitespace-nowrap transition-all duration-300 hover:scale-105 ${
-                theme === "dark"
-                  ? "bg-gradient-to-r from-purple-500 to-pink-500 hover:shadow-2xl hover:shadow-purple-500/25"
-                  : "bg-gradient-to-r from-blue-500 to-purple-600 hover:shadow-2xl hover:shadow-blue-500/25"
-              }`}
+              className={`px-8 py-3 rounded-2xl font-semibold text-white transition-all duration-300 hover:scale-105 ${buttonGradient}`}
             >
               Get Started Today
             </a>

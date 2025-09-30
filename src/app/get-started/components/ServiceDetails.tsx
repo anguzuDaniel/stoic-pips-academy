@@ -2,6 +2,12 @@
 
 import { useTheme } from "next-themes";
 import { Service } from "@/data/Service";
+import { Inter } from "next/font/google";
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+});
 
 export default function ServiceDetails({
   title,
@@ -13,60 +19,73 @@ export default function ServiceDetails({
   const { theme } = useTheme();
   
   const headingColor = theme === "dark" ? "text-white" : "text-gray-900";
-  const textColor = theme === "dark" ? "text-gray-300" : "text-gray-700";
+  const textColor = theme === "dark" ? "text-gray-300" : "text-gray-600";
   const borderColor = theme === "dark" ? "border-gray-700" : "border-gray-200";
-  const cardBg = theme === "dark" ? "bg-gray-800" : "bg-gray-50";
+  const cardBg = theme === "dark" ? "bg-gray-800" : "bg-white";
 
-  // Ensure features is always an array
   const safeFeatures = features || [];
 
   return (
     <div className="lg:col-span-1">
-      <div className={`rounded-2xl p-8 ${cardBg} border ${borderColor} shadow-lg sticky top-8`}>
+      <div className={`rounded-xl p-6 ${cardBg} border ${borderColor} shadow-sm sticky top-8`}>
+        {/* Header */}
         <div className="text-center mb-6">
-          <h2 className={`text-2xl font-bold mb-2 ${headingColor}`}>
+          <h2 className={`text-xl font-semibold mb-3 ${headingColor} ${inter.className}`}>
             {title}
           </h2>
-          <div className="flex items-center justify-center space-x-2">
+          
+          <div className="flex items-center justify-center space-x-2 mb-4">
             {originalPrice && (
-              <span className="line-through text-gray-400 text-lg">
+              <span className={`line-through text-sm ${inter.className} ${
+                theme === "dark" ? "text-gray-500" : "text-gray-400"
+              }`}>
                 {originalPrice}
               </span>
             )}
-            <span className="text-3xl font-bold text-green-500">{price}</span>
+            <span className={`text-2xl font-semibold ${inter.className} ${
+              theme === "dark" ? "text-blue-400" : "text-blue-600"
+            }`}>
+              {price}
+            </span>
           </div>
         </div>
 
-        <p className={`text-center mb-6 leading-relaxed ${textColor}`}>
+        {/* Description */}
+        <p className={`text-center mb-6 text-sm leading-relaxed ${inter.className} ${textColor}`}>
           {description}
         </p>
 
+        {/* Features */}
         <div className="mb-6">
-          <h3 className={`text-xl font-semibold mb-4 ${headingColor}`}>
-            🎯 What You&apos;ll Master
+          <h3 className={`text-lg font-semibold mb-4 ${headingColor} ${inter.className}`}>
+            Includes:
           </h3>
-          <div className="space-y-3">
+          <div className="space-y-2">
             {safeFeatures.map((feature: string, idx: number) => (
-              <div key={idx} className="flex items-start space-x-3">
-                <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                  <span className="text-white text-xs">✓</span>
-                </div>
-                <span className={`text-sm ${textColor}`}>{feature}</span>
+              <div key={idx} className="flex items-start gap-2">
+                <span className={`mt-1 text-sm ${
+                  theme === "dark" ? "text-blue-400" : "text-blue-600"
+                }`}>•</span>
+                <span className={`text-sm ${textColor} ${inter.className}`}>
+                  {feature}
+                </span>
               </div>
             ))}
           </div>
         </div>
 
-        <div className={`p-4 rounded-lg border ${borderColor} bg-white dark:bg-gray-900`}>
-          <h4 className={`font-semibold mb-2 ${headingColor}`}>
-            ✨ Academy Benefits
+        {/* Benefits */}
+        <div className={`p-4 rounded-lg border ${borderColor} ${
+          theme === "dark" ? "bg-gray-700" : "bg-gray-50"
+        }`}>
+          <h4 className={`font-semibold mb-3 text-sm ${headingColor} ${inter.className}`}>
+            Benefits
           </h4>
-          <ul className={`text-sm space-y-1 ${textColor}`}>
-            <li>• Lifetime course access</li>
-            <li>• Daily market analysis</li>
-            <li>• Private trading community</li>
-            <li>• Personal mentorship</li>
-            <li>• Risk management tools</li>
+          <ul className={`text-xs space-y-1 ${textColor} ${inter.className}`}>
+            <li>• Lifetime access</li>
+            <li>• Daily analysis</li>
+            <li>• Trading community</li>
+            <li>• Personal support</li>
           </ul>
         </div>
       </div>

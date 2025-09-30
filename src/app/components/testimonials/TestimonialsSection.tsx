@@ -23,51 +23,26 @@ export default function TestimonialsSection() {
     setMounted(true);
   }, []);
 
-  if (!mounted) {
-    return (
-      <section className="py-20 bg-white dark:bg-gray-800 animate-pulse">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <div className="h-12 bg-gray-300 dark:bg-gray-700 rounded w-1/3 mx-auto mb-4"></div>
-            <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-1/2 mx-auto"></div>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[...Array(3)].map((_, i) => (
-              <div key={i} className="h-80 bg-gray-300 dark:bg-gray-700 rounded-2xl"></div>
-            ))}
-          </div>
-        </div>
-      </section>
-    );
-  }
+  if (!mounted) return null;
+
+  const gradientText = theme === "dark" 
+    ? "bg-gradient-to-r from-purple-400 via-pink-400 to-red-400"
+    : "bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600";
 
   const sectionBg = theme === "dark" 
     ? "bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900" 
-    : "bg-gradient-to-br from-white via-blue-50/20 to-purple-50/10";
-  
-  const headingColor = theme === "dark" ? "text-white" : "text-gray-900";
-  const textColor = theme === "dark" ? "text-gray-300" : "text-gray-600";
+    : "bg-gradient-to-br from-white via-blue-50 to-purple-50";
+
+  const buttonGradient = theme === "dark"
+    ? "bg-gradient-to-r from-purple-500 to-pink-500"
+    : "bg-gradient-to-r from-blue-500 to-purple-600";
 
   return (
-    <section
-      id="testimonials"
-      className={`relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden transition-all duration-700 ${sectionBg}`}
-    >
-      {/* Background Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className={`absolute top-1/3 -left-20 w-80 h-80 rounded-full blur-3xl opacity-10 ${
-          theme === "dark" ? "bg-purple-500" : "bg-blue-400"
-        }`} />
-        <div className={`absolute bottom-1/3 -right-20 w-96 h-96 rounded-full blur-3xl opacity-10 ${
-          theme === "dark" ? "bg-pink-500" : "bg-purple-400"
-        }`} />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-transparent to-gray-900/5 dark:to-gray-900/10" />
-      </div>
-
+    <section id="testimonials" className={`relative py-24 px-4 sm:px-6 lg:px-8 ${sectionBg}`}>
+      
       <div className="relative max-w-7xl mx-auto">
         {/* Header Section */}
         <div className="text-center mb-20">
-          {/* Section Badge */}
           <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full border backdrop-blur-sm mb-6 ${
             theme === "dark"
               ? "border-purple-500/30 bg-purple-500/10 text-purple-200"
@@ -77,21 +52,19 @@ export default function TestimonialsSection() {
             <span className={`text-sm font-medium ${inter.className}`}>Success Stories</span>
           </div>
 
-          {/* Main Heading */}
-          <h2 className={`${playfair.className} text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight ${headingColor}`}>
+          <h2 className={`${playfair.className} text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight ${
+            theme === "dark" ? "text-white" : "text-gray-900"
+          }`}>
             Transforming{" "}
-            <span className={`bg-clip-text text-transparent bg-gradient-to-r ${
-              theme === "dark"
-                ? "from-purple-400 via-pink-400 to-red-400"
-                : "from-blue-600 via-purple-600 to-pink-600"
-            }`}>
+            <span className={`bg-clip-text text-transparent ${gradientText}`}>
               Lives
             </span>{" "}
             Through Trading
           </h2>
 
-          {/* Subheading */}
-          <p className={`max-w-2xl mx-auto text-lg md:text-xl leading-relaxed ${textColor} ${inter.className}`}>
+          <p className={`max-w-2xl mx-auto text-lg leading-relaxed ${inter.className} ${
+            theme === "dark" ? "text-gray-300" : "text-gray-600"
+          }`}>
             Join thousands of traders who transformed their results and achieved financial 
             freedom with our proven mentorship programs.
           </p>
@@ -106,62 +79,40 @@ export default function TestimonialsSection() {
                 theme === "dark"
                   ? "bg-gray-800/50 border-gray-700 hover:border-purple-500/50"
                   : "bg-white/80 border-gray-200 hover:border-blue-500/50"
-              } shadow-lg hover:shadow-2xl transform transition-all duration-500 hover:-translate-y-2`}
-              style={{ transitionDelay: `${index * 100}ms` }}
+              } transform transition-all duration-500 hover:-translate-y-2`}
             >
-              {/* Quote Icon */}
+              {/* Testimonial content remains the same but with consistent colors */}
               <div className={`absolute -top-3 -left-3 w-8 h-8 rounded-full flex items-center justify-center ${
-                theme === "dark" 
-                  ? "bg-purple-500 text-white" 
-                  : "bg-blue-500 text-white"
-              }`}>
+                theme === "dark" ? "bg-purple-500" : "bg-blue-500"
+              } text-white`}>
                 <span className="text-lg">"</span>
               </div>
 
-              {/* Rating Stars */}
-              <div className="flex justify-center mb-4">
-                {[...Array(5)].map((_, i) => (
-                  <span key={i} className="text-yellow-400 text-lg">★</span>
-                ))}
-              </div>
-
-              {/* Testimonial Text */}
-              <p className={`text-lg leading-relaxed mb-6 italic ${textColor} ${inter.className}`}>
+              <p className={`text-lg leading-relaxed mb-6 italic ${inter.className} ${
+                theme === "dark" ? "text-gray-300" : "text-gray-600"
+              }`}>
                 "{testimonial.text}"
               </p>
 
-              {/* Author Info */}
               <div className="flex items-center gap-4">
-                <div className="relative">
-                  <img
-                    src={testimonial.image}
-                    alt={testimonial.name}
-                    className="w-14 h-14 rounded-full object-cover border-2 border-gray-300 dark:border-gray-600"
-                  />
-                  <div className={`absolute -bottom-1 -right-1 w-5 h-5 rounded-full border-2 ${
-                    theme === "dark" ? "border-gray-800" : "border-white"
-                  } ${
-                    testimonial.role.includes('Professional') ? 'bg-green-500' :
-                    testimonial.role.includes('Beginner') ? 'bg-blue-500' :
-                    'bg-purple-500'
-                  }`} />
-                </div>
-                <div className="text-left flex-1">
-                  <h3 className={`font-bold text-lg ${headingColor}`}>
+                <img
+                  src={testimonial.image}
+                  alt={testimonial.name}
+                  className="w-14 h-14 rounded-full object-cover border-2 border-gray-300 dark:border-gray-600"
+                />
+                <div className="text-left">
+                  <h3 className={`font-bold text-lg ${
+                    theme === "dark" ? "text-white" : "text-gray-900"
+                  }`}>
                     {testimonial.name}
                   </h3>
-                  <p className={`text-sm ${theme === "dark" ? "text-purple-300" : "text-blue-600"} font-medium`}>
+                  <p className={`text-sm ${
+                    theme === "dark" ? "text-purple-300" : "text-blue-600"
+                  }`}>
                     {testimonial.role}
                   </p>
                 </div>
               </div>
-
-              {/* Hover Effect Background */}
-              <div className={`absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${
-                theme === "dark"
-                  ? "bg-gradient-to-br from-purple-500/5 to-pink-500/5"
-                  : "bg-gradient-to-br from-blue-500/5 to-purple-500/5"
-              }`} />
             </div>
           ))}
         </div>
@@ -172,22 +123,20 @@ export default function TestimonialsSection() {
             theme === "dark"
               ? "bg-gray-800/50 border-gray-700"
               : "bg-white/50 border-gray-200"
-          } shadow-2xl max-w-2xl mx-auto`}>
+          } max-w-2xl mx-auto`}>
             <div className="text-left">
-              <h3 className={`text-xl font-bold mb-2 ${headingColor} ${inter.className}`}>
+              <h3 className={`text-xl font-bold mb-2 ${inter.className} ${
+                theme === "dark" ? "text-white" : "text-gray-900"
+              }`}>
                 Ready to Write Your Success Story?
               </h3>
-              <p className={`${textColor} ${inter.className}`}>
-                Join our community of successful traders and start your transformation today.
+              <p className={theme === "dark" ? "text-gray-300" : "text-gray-600"}>
+                Join our community of successful traders today.
               </p>
             </div>
             <a
               href="/mentorship"
-              className={`px-8 py-3 rounded-2xl font-semibold text-white whitespace-nowrap transition-all duration-300 hover:scale-105 ${
-                theme === "dark"
-                  ? "bg-gradient-to-r from-purple-500 to-pink-500 hover:shadow-2xl hover:shadow-purple-500/25"
-                  : "bg-gradient-to-r from-blue-500 to-purple-600 hover:shadow-2xl hover:shadow-blue-500/25"
-              }`}
+              className={`px-8 py-3 rounded-2xl font-semibold text-white transition-all duration-300 hover:scale-105 ${buttonGradient}`}
             >
               Start Now
             </a>

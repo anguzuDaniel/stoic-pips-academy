@@ -2,7 +2,6 @@
 
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-import BackgroundOverlay from "./BackgroundOverlay";
 import { Playfair_Display, Inter } from "next/font/google";
 
 const playfair = Playfair_Display({
@@ -23,119 +22,56 @@ export default function AboutSection() {
     setMounted(true);
   }, []);
 
-  if (!mounted) {
-    return (
-      <section className="py-20 bg-white dark:bg-gray-800 animate-pulse">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row gap-12 items-center">
-            <div className="w-full lg:w-1/2 h-80 bg-gray-300 dark:bg-gray-700 rounded-2xl"></div>
-            <div className="w-full lg:w-1/2 space-y-4">
-              <div className="h-12 bg-gray-300 dark:bg-gray-700 rounded"></div>
-              <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded"></div>
-              <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded"></div>
-            </div>
-          </div>
-        </div>
-      </section>
-    );
-  }
+  if (!mounted) return null;
 
-  const headingColor = theme === "dark" ? "text-white" : "text-gray-900";
-  const textColor = theme === "dark" ? "text-gray-300" : "text-gray-700";
+  const gradientText = theme === "dark" 
+    ? "bg-gradient-to-r from-purple-400 via-pink-400 to-red-400"
+    : "bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600";
+
   const sectionBg = theme === "dark" 
-    ? "bg-gradient-to-br from-gray-800 via-gray-900 to-black" 
-    : "bg-gradient-to-br from-white via-gray-50 to-blue-50/30";
+    ? "bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900" 
+    : "bg-gradient-to-br from-white via-blue-50 to-purple-50";
+
+  const cardBg = theme === "dark"
+    ? "bg-gray-800/50 border-gray-700"
+    : "bg-white/80 border-gray-200";
 
   return (
-    <section
-      id="about"
-      className={`relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden transition-all duration-700 ${sectionBg}`}
-    >
-      <BackgroundOverlay />
+    <section id="about" className={`relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden ${sectionBg}`}>
       
-      {/* Floating decorative elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className={`absolute -top-10 -right-10 w-40 h-40 rounded-full blur-3xl opacity-10 ${
-          theme === "dark" ? "bg-purple-500" : "bg-blue-400"
-        }`} />
-        <div className={`absolute -bottom-10 -left-10 w-60 h-60 rounded-full blur-3xl opacity-10 ${
-          theme === "dark" ? "bg-pink-500" : "bg-purple-400"
-        }`} />
-      </div>
-
       <div className="relative max-w-7xl mx-auto">
         <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-20">
           
-          {/* Visual Elements - Trading Metrics */}
+          {/* Visual Section */}
           <div className="w-full lg:w-1/2 relative">
-            <div className={`relative rounded-3xl p-8 backdrop-blur-sm border ${
-              theme === "dark"
-                ? "bg-gray-800/50 border-gray-700"
-                : "bg-white/50 border-gray-200"
-            } shadow-2xl`}>
-              
-              {/* Animated Chart Container */}
-              <div className="mb-8">
-                <div className="flex items-center justify-between mb-4">
-                  <span className={`font-semibold ${theme === "dark" ? "text-green-400" : "text-green-600"}`}>
-                    Trading Progress
-                  </span>
-                  <span className={`text-sm ${textColor}`}>+84.2%</span>
-                </div>
-                <div className={`h-2 rounded-full ${theme === "dark" ? "bg-gray-700" : "bg-gray-200"}`}>
-                  <div className="h-full rounded-full bg-gradient-to-r from-green-400 to-blue-500 w-3/4 animate-pulse"></div>
-                </div>
-              </div>
-
-              {/* Metrics Grid */}
-              <div className="grid grid-cols-2 gap-6">
-                {[
-                  { icon: "📈", title: "Price Action", desc: "Master market structure" },
-                  { icon: "⚖️", title: "Risk Management", desc: "Protect your capital" },
-                  { icon: "🧠", title: "Psychology", desc: "Develop winning mindset" },
-                  { icon: "📊", title: "Strategy", desc: "Proven frameworks" }
-                ].map((item, index) => (
-                  <div key={index} className="text-center p-4 rounded-2xl bg-gradient-to-br from-gray-900/10 to-transparent">
-                    <div className="text-2xl mb-2">{item.icon}</div>
-                    <div className={`font-semibold ${headingColor}`}>{item.title}</div>
-                    <div className={`text-sm ${textColor}`}>{item.desc}</div>
+            <div className={`relative rounded-3xl p-8 backdrop-blur-sm border-2 ${cardBg}`}>
+              {/* Trading Metrics */}
+              <div className="space-y-6">
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className={theme === "dark" ? "text-purple-300" : "text-blue-600"}>Success Rate</span>
+                    <span className="text-sm text-gray-500">95%</span>
                   </div>
-                ))}
-              </div>
-
-              {/* Trading Principles */}
-              <div className="space-y-4">
-                <h4 className={`font-semibold text-lg ${headingColor}`}>Our Principles</h4>
-                {[
-                  "Price Action Mastery",
-                  "Risk Management First",
-                  "Disciplined Execution",
-                  "Continuous Learning"
-                ].map((principle, index) => (
-                  <div key={index} className="flex items-center gap-3">
-                    <div className={`w-2 h-2 rounded-full ${
-                      theme === "dark" ? "bg-purple-400" : "bg-blue-500"
-                    }`}></div>
-                    <span className={textColor}>{principle}</span>
+                  <div className={`h-2 rounded-full ${theme === "dark" ? "bg-gray-700" : "bg-gray-200"}`}>
+                    <div className="h-full rounded-full bg-gradient-to-r from-green-400 to-blue-500 w-11/12"></div>
                   </div>
-                ))}
-              </div>
+                </div>
 
-              {/* Decorative Chart Line */}
-              <div className="absolute top-4 right-4 opacity-20">
-                <svg width="60" height="40" viewBox="0 0 60 40" fill="none">
-                  <path d="M0,20 L15,15 L30,25 L45,10 L60,30" stroke="currentColor" strokeWidth="2" fill="none" />
-                </svg>
+                <div className="grid grid-cols-2 gap-4">
+                  {[
+                    { label: "Win Rate", value: "76%", color: "text-green-400" },
+                    { label: "Risk/Reward", value: "1:3.2", color: "text-blue-400" },
+                    { label: "Consistency", value: "89%", color: "text-purple-400" },
+                    { label: "Satisfaction", value: "98%", color: "text-pink-400" }
+                  ].map((metric, index) => (
+                    <div key={index} className="text-center p-3 rounded-xl bg-gray-900/5 dark:bg-white/5">
+                      <div className={`text-xl font-bold ${metric.color}`}>{metric.value}</div>
+                      <div className="text-sm text-gray-600 dark:text-gray-400">{metric.label}</div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
-
-            {/* Floating elements */}
-            <div className={`absolute -top-4 -left-4 w-20 h-20 rounded-full blur-xl opacity-20 ${
-              theme === "dark" ? "bg-purple-500" : "bg-blue-400"
-            }`}></div>
-            <div className={`absolute -bottom-4 -right-4 w-16 h-16 rounded-full blur-xl opacity-20 ${
-              theme === "dark" ? "bg-pink-500" : "bg-purple-400"
-            }`}></div>
           </div>
 
           {/* Text Content */}
@@ -150,70 +86,28 @@ export default function AboutSection() {
               <span className={`text-sm font-medium ${inter.className}`}>Our Story</span>
             </div>
 
-            {/* Heading */}
-            <h2 className={`${playfair.className} text-4xl md:text-5xl lg:text-6xl font-bold leading-tight ${headingColor}`}>
+            <h2 className={`${playfair.className} text-4xl md:text-5xl lg:text-6xl font-bold leading-tight ${
+              theme === "dark" ? "text-white" : "text-gray-900"
+            }`}>
               Transforming{" "}
-              <span className={`bg-clip-text text-transparent bg-gradient-to-r ${
-                theme === "dark"
-                  ? "from-purple-400 via-pink-400 to-red-400"
-                  : "from-blue-600 via-purple-600 to-pink-600"
-              }`}>
+              <span className={`bg-clip-text text-transparent ${gradientText}`}>
                 Traders
               </span>{" "}
               Into Masters
             </h2>
 
-            {/* Content */}
-            <div className={`space-y-6 text-lg leading-relaxed ${textColor} ${inter.className}`}>
+            <div className={`space-y-6 text-lg leading-relaxed ${inter.className} ${
+              theme === "dark" ? "text-gray-300" : "text-gray-600"
+            }`}>
               <p>
-                At <span className={`font-semibold ${
-                  theme === "dark" ? "text-purple-300" : "text-blue-600"
-                }`}>Stoic Pips Academy</span>, we transform beginners into consistently profitable traders through mastery of institutional trading strategies.
+                At <span className={theme === "dark" ? "text-purple-300" : "text-blue-600"}>Stoic Pips Academy</span>, 
+                we transform beginners into consistently profitable traders through mastery of institutional trading strategies.
               </p>
 
               <p>
-                Founded by <span className={`font-semibold ${
-                  theme === "dark" ? "text-pink-300" : "text-purple-600"
-                }`}>Anguzu Daniel</span>, our philosophy centers on <span className="italic">discipline, mindset, and strategy</span>—the essential foundation for sustainable trading success.
+                Founded by <span className={theme === "dark" ? "text-pink-300" : "text-purple-600"}>Anguzu Daniel</span>, 
+                our philosophy centers on discipline, mindset, and strategy for sustainable trading success.
               </p>
-
-              <div className={`p-6 rounded-2xl border ${
-                theme === "dark"
-                  ? "bg-gray-800/50 border-gray-700"
-                  : "bg-white/50 border-gray-200"
-              }`}>
-                <p className={`font-semibold text-lg ${
-                  theme === "dark" ? "text-purple-200" : "text-purple-700"
-                }`}>
-                  "Master the market by first mastering yourself. Discipline is the bridge between goals and accomplishment."
-                </p>
-                <p className={`text-sm mt-2 ${
-                  theme === "dark" ? "text-gray-400" : "text-gray-600"
-                }`}>
-                  — Anguzu Daniel, Founder
-                </p>
-              </div>
-            </div>
-
-            {/* Stats */}
-            <div className="grid grid-cols-2 gap-6 pt-4">
-              {[
-                { number: "2K+", label: "Traders Educated" },
-                { number: "95%", label: "Success Rate" },
-                { number: "4.9", label: "Rating" },
-                { number: "24/7", label: "Support" }
-              ].map((stat, index) => (
-                <div key={index} className="text-center">
-                  <div className={`text-2xl font-bold ${
-                    theme === "dark" ? "text-purple-300" : "text-blue-600"
-                  }`}>
-                    {stat.number}
-                  </div>
-                  <div className={`text-sm ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>
-                    {stat.label}
-                  </div>
-                </div>
-              ))}
             </div>
           </div>
         </div>
