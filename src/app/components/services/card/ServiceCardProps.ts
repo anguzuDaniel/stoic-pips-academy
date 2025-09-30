@@ -6,4 +6,5 @@ export interface ServiceCardProps {
   icon?: ElementType | null;
   link?: string;
   image?: string;
+  index: number
 }
