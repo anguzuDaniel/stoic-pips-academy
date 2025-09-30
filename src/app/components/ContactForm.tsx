@@ -1,126 +1,237 @@
 "use client";
 
-import { useTheme } from "next-themes";
 import { useState, useEffect } from "react";
-import Button from "./button/Button";
+import { useTheme } from "next-themes";
+import { Inter } from "next/font/google";
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+});
 
 export default function ContactForm() {
   const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
+    name: "",
+    email: "",
+    phone: "",
+    service: "",
+    message: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<"success" | "error" | null>(null);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
+    try {
+      const response = await fetch("/api/send-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setSubmitStatus("success");
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          service: "",
+          message: "",
+        });
+      } else {
+        setSubmitStatus("error");
+      }
+    } catch (error) {
+      setSubmitStatus("error");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  // Use a default theme until component mounts
   const currentTheme = mounted ? theme : 'light';
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
-    // You can add your form submission logic here
-  };
+  const inputClasses = `w-full p-3 rounded-xl border-2 ${inter.className} ${
+    currentTheme === "dark" 
+      ? "border-gray-600 bg-gray-700/50 text-white placeholder-gray-400 focus:border-purple-500" 
+      : "border-gray-300 bg-white/80 text-gray-900 placeholder-gray-500 focus:border-blue-500"
+  } focus:outline-none focus:ring-2 focus:ring-opacity-20 transition-all duration-300`;
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value
-    }));
-  };
+  const labelClasses = `block mb-2 text-sm font-medium ${inter.className} ${
+    currentTheme === "dark" ? "text-gray-300" : "text-gray-700"
+  }`;
+
+  // Show loading state until mounted
+  if (!mounted) {
+    return (
+      <div className="space-y-6 animate-pulse">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="h-16 bg-gray-200 dark:bg-gray-700 rounded-xl"></div>
+          <div className="h-16 bg-gray-200 dark:bg-gray-700 rounded-xl"></div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="h-16 bg-gray-200 dark:bg-gray-700 rounded-xl"></div>
+          <div className="h-16 bg-gray-200 dark:bg-gray-700 rounded-xl"></div>
+        </div>
+        <div className="h-32 bg-gray-200 dark:bg-gray-700 rounded-xl"></div>
+        <div className="h-12 bg-gray-200 dark:bg-gray-700 rounded-2xl"></div>
+      </div>
+    );
+  }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col space-y-6">
-      {/* Name Field */}
-      <div className="group">
-        <label className={`block text-sm font-medium mb-2 transition-colors duration-300 ${
-          currentTheme === "dark" ? "text-gray-300" : "text-gray-700"
+    <form onSubmit={handleSubmit} className="space-y-6">
+      {/* Status Messages */}
+      {submitStatus === "success" && (
+        <div className={`p-4 rounded-xl border-2 ${
+          currentTheme === "dark" 
+            ? "bg-green-900/20 border-green-700/50 text-green-300" 
+            : "bg-green-50 border-green-200 text-green-800"
         }`}>
-          Your Name
-        </label>
-        <input
-          type="text"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          placeholder="Enter your full name"
-          className={`w-full rounded-xl px-4 py-4 border-2 transition-all duration-300 focus:outline-none focus:scale-105
-            ${currentTheme === "dark" 
-              ? "bg-gray-700/50 border-gray-600 text-white placeholder-gray-400 focus:border-blue-500 focus:bg-gray-700/70" 
-              : "bg-white/80 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:bg-white"
-            }
-          `}
-          required
-        />
+          ✅ Thank you! Your message has been sent successfully.
+        </div>
+      )}
+
+      {submitStatus === "error" && (
+        <div className={`p-4 rounded-xl border-2 ${
+          currentTheme === "dark" 
+            ? "bg-red-900/20 border-red-700/50 text-red-300" 
+            : "bg-red-50 border-red-200 text-red-800"
+        }`}>
+          ❌ There was an error sending your message. Please try again or email us directly.
+        </div>
+      )}
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label htmlFor="name" className={labelClasses}>
+            Full Name *
+          </label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            className={inputClasses}
+            placeholder="John Doe"
+            required
+          />
+        </div>
+
+        <div>
+          <label htmlFor="email" className={labelClasses}>
+            Email Address *
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            className={inputClasses}
+            placeholder="john@example.com"
+            required
+          />
+        </div>
       </div>
 
-      {/* Email Field */}
-      <div className="group">
-        <label className={`block text-sm font-medium mb-2 transition-colors duration-300 ${
-          currentTheme === "dark" ? "text-gray-300" : "text-gray-700"
-        }`}>
-          Email Address
-        </label>
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          placeholder="your.email@example.com"
-          className={`w-full rounded-xl px-4 py-4 border-2 transition-all duration-300 focus:outline-none focus:scale-105
-            ${currentTheme === "dark" 
-              ? "bg-gray-700/50 border-gray-600 text-white placeholder-gray-400 focus:border-blue-500 focus:bg-gray-700/70" 
-              : "bg-white/80 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:bg-white"
-            }
-          `}
-          required
-        />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label htmlFor="phone" className={labelClasses}>
+            Phone Number
+          </label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+            className={inputClasses}
+            placeholder="+256 712 345 678"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="service" className={labelClasses}>
+            Interested In
+          </label>
+          <select
+            id="service"
+            name="service"
+            value={formData.service}
+            onChange={handleChange}
+            className={inputClasses}
+          >
+            <option value="">Select a service</option>
+            <option value="Mentorship Program">Mentorship Program</option>
+            <option value="Trading Course">Trading Course</option>
+            <option value="Broker Guidance">Broker Guidance</option>
+            <option value="General Inquiry">General Inquiry</option>
+          </select>
+        </div>
       </div>
 
-      {/* Message Field */}
-      <div className="group">
-        <label className={`block text-sm font-medium mb-2 transition-colors duration-300 ${
-          currentTheme === "dark" ? "text-gray-300" : "text-gray-700"
-        }`}>
-          Your Message
+      <div>
+        <label htmlFor="message" className={labelClasses}>
+          Message *
         </label>
         <textarea
+          id="message"
           name="message"
           value={formData.message}
           onChange={handleChange}
-          placeholder="Tell us about your trading goals and how we can help..."
-          rows={6}
-          className={`w-full rounded-xl px-4 py-4 border-2 transition-all duration-300 focus:outline-none focus:scale-105 resize-none
-            ${currentTheme === "dark" 
-              ? "bg-gray-700/50 border-gray-600 text-white placeholder-gray-400 focus:border-blue-500 focus:bg-gray-700/70" 
-              : "bg-white/80 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:bg-white"
-            }
-          `}
+          rows={5}
+          className={inputClasses}
+          placeholder="Tell us about your trading goals and how we can help you..."
           required
         />
       </div>
 
-      {/* Submit Button */}
-      <Button 
+      <button
         type="submit"
-        className="w-full py-4 font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 mt-6
-          bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 shadow-lg"
+        disabled={isSubmitting}
+        className={`w-full py-4 rounded-2xl font-semibold text-white transition-all duration-300 ${
+          currentTheme === "dark"
+            ? "bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
+            : "bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
+        } ${isSubmitting ? "opacity-50 cursor-not-allowed" : "hover:scale-105"} ${inter.className}`}
       >
-        <span className="flex items-center justify-center gap-2">
-          <span className="text-lg">🚀</span>
-          Send Message
-        </span>
-      </Button>
+        {isSubmitting ? (
+          <span className="flex items-center justify-center">
+            <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            Sending...
+          </span>
+        ) : (
+          "Send Message"
+        )}
+      </button>
 
-      {/* Privacy Note */}
-      <p className={`text-center text-xs mt-4 transition-colors duration-300 ${
-        currentTheme === "dark" ? "text-gray-400" : "text-gray-500"
+      <p className={`text-center text-sm ${inter.className} ${
+        currentTheme === "dark" ? "text-gray-400" : "text-gray-600"
       }`}>
-        Your information is secure. We respect your privacy and never share your data.
+        We'll get back to you within 24 hours
       </p>
     </form>
   );
