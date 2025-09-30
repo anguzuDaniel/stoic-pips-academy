@@ -88,16 +88,17 @@ export default function AboutSection() {
               </div>
 
               {/* Metrics Grid */}
-              <div className="grid grid-cols-2 gap-6 mb-8">
+              <div className="grid grid-cols-2 gap-6">
                 {[
-                  { label: "Win Rate", value: "76%", color: "text-green-400" },
-                  { label: "Avg Return", value: "2.4%", color: "text-blue-400" },
-                  { label: "Risk/Reward", value: "1:3.2", color: "text-purple-400" },
-                  { label: "Consistency", value: "89%", color: "text-pink-400" }
-                ].map((metric, index) => (
-                  <div key={index} className="text-center p-4 rounded-2xl bg-gradient-to-br from-gray-900/20 to-gray-900/5">
-                    <div className={`text-2xl font-bold ${metric.color}`}>{metric.value}</div>
-                    <div className={`text-sm ${textColor}`}>{metric.label}</div>
+                  { icon: "📈", title: "Price Action", desc: "Master market structure" },
+                  { icon: "⚖️", title: "Risk Management", desc: "Protect your capital" },
+                  { icon: "🧠", title: "Psychology", desc: "Develop winning mindset" },
+                  { icon: "📊", title: "Strategy", desc: "Proven frameworks" }
+                ].map((item, index) => (
+                  <div key={index} className="text-center p-4 rounded-2xl bg-gradient-to-br from-gray-900/10 to-transparent">
+                    <div className="text-2xl mb-2">{item.icon}</div>
+                    <div className={`font-semibold ${headingColor}`}>{item.title}</div>
+                    <div className={`text-sm ${textColor}`}>{item.desc}</div>
                   </div>
                 ))}
               </div>
