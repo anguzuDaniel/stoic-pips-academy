@@ -57,68 +57,90 @@ export default function Footer() {
     <footer
       className={`relative border-t ${borderColor} py-12 transition-all duration-700 ${sectionBg}`}
     >
-      {/* Background Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className={`absolute bottom-0 left-0 w-64 h-64 rounded-full blur-3xl opacity-10 ${
-          theme === "dark" ? "bg-purple-500" : "bg-blue-400"
-        }`} />
-        <div className={`absolute bottom-0 right-0 w-48 h-48 rounded-full blur-3xl opacity-10 ${
-          theme === "dark" ? "bg-pink-500" : "bg-purple-400"
-        }`} />
-      </div>
+      {/* Main Footer Content */}
+      <div className="flex flex-col lg:flex-row items-center justify-between gap-8 mb-8">
+        {/* Brand Section */}
+        <div className="text-center lg:text-left">
+          <h1 className={`${playfair.className} text-3xl font-bold mb-2 ${textColor}`}>
+            Stoic Pips{" "}
+            <span className={`bg-clip-text text-transparent ${gradientText}`}>
+              Academy
+            </span>
+          </h1>
+          <p className={`text-lg max-w-md ${subTextColor} ${inter.className}`}>
+            Transforming traders through disciplined strategies and proven mentorship.
+          </p>
+        </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Main Footer Content */}
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-8 mb-8">
-          {/* Brand Section */}
-          <div className="text-center lg:text-left">
-            <h1 className={`${playfair.className} text-3xl font-bold mb-2 ${textColor}`}>
-              Stoic Pips{" "}
-              <span className={`bg-clip-text text-transparent ${gradientText}`}>
-                Academy
+        {/* Social Links - Modern Design */}
+        <div className="flex flex-col sm:flex-row items-center gap-3">
+          {[
+            {
+              icon: <EnvelopeIcon className="w-5 h-5" />,
+              href: "mailto:stoicpips@gmail.com",
+              label: "Email",
+              color: "blue",
+              gradient: "from-blue-500 to-blue-600"
+            },
+            {
+              icon: <FaYoutube className="w-5 h-5" />,
+              href: "https://www.youtube.com/channel/UCyYDnMSj6e1rTdOvn7whuvw",
+              label: "YouTube",
+              color: "red",
+              gradient: "from-red-500 to-red-600"
+            },
+            {
+              icon: <FaTelegramPlane className="w-5 h-5" />,
+              href: "https://t.me/+Syr6WpolrV1iZjhk",
+              label: "Telegram",
+              color: "blue",
+              gradient: "from-blue-400 to-blue-500"
+            },
+            {
+              icon: <FaWhatsapp className="w-5 h-5" />,
+              href: "https://wa.me/+256706045809",
+              label: "WhatsApp",
+              color: "green",
+              gradient: "from-green-500 to-green-600"
+            }
+          ].map((social, index) => (
+            <a
+              key={index}
+              href={social.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`group relative flex items-center gap-3 px-4 py-3 rounded-2xl backdrop-blur-sm border transition-all duration-300 hover:scale-105 ${
+                theme === "dark"
+                  ? `border-${social.color}-500/30 bg-${social.color}-500/10 text-${social.color}-200 hover:bg-${social.color}-500/20`
+                  : `border-${social.color}-500/30 bg-${social.color}-500/10 text-${social.color}-700 hover:bg-${social.color}-500/20`
+              }`}
+            >
+              {/* Animated Background on Hover */}
+              <div className={`absolute inset-0 rounded-2xl bg-gradient-to-r ${social.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
+              
+              {/* Icon */}
+              <div className={`relative z-10 ${theme === "dark" ? `text-${social.color}-400` : `text-${social.color}-600`}`}>
+                {social.icon}
+              </div>
+              
+              {/* Label */}
+              <span className={`relative z-10 font-medium ${inter.className}`}>
+                {social.label}
               </span>
-            </h1>
-            <p className={`text-lg max-w-md ${subTextColor} ${inter.className}`}>
-              Transforming traders through disciplined strategies and proven mentorship.
-            </p>
-          </div>
 
-          <div className="flex flex-col sm:flex-row items-center gap-4">
-            <a
-              href="mailto:stoicpips@gmail.com"
-              className="flex items-center gap-2 hover:text-blue-500 transition-colors"
-            >
-              <EnvelopeIcon className="w-5 h-5" />
-              Email
+              {/* Hover Arrow */}
+              <svg 
+                className={`w-4 h-4 relative z-10 transform transition-transform duration-300 group-hover:translate-x-1 ${
+                  theme === "dark" ? `text-${social.color}-400` : `text-${social.color}-600`
+                } opacity-0 group-hover:opacity-100`}
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
             </a>
-            <a
-              href="https://www.youtube.com/channel/UCyYDnMSj6e1rTdOvn7whuvw"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 hover:text-red-500 transition-colors"
-            >
-              <FaYoutube className="w-5 h-5" />
-              YouTube
-            </a>
-            <a
-              href="https://t.me/+Syr6WpolrV1iZjhk"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 hover:text-blue-500 transition-colors"
-            >
-              <FaTelegramPlane className="w-5 h-5" />
-              Telegram
-            </a>
-            <a
-              href="https://wa.me/+256706045809"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 hover:text-green-500 transition-colors"
-            >
-              <FaWhatsapp className="w-5 h-5" />
-              WhatsApp
-            </a>
-          </div>
+          ))}
         </div>
 
         {/* Additional Links */}
