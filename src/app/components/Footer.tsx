@@ -57,7 +57,18 @@ export default function Footer() {
     <footer
       className={`relative border-t ${borderColor} py-12 transition-all duration-700 ${sectionBg}`}
     >
-      {/* Main Footer Content */}
+      {/* Background Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className={`absolute bottom-0 left-0 w-64 h-64 rounded-full blur-3xl opacity-10 ${
+          theme === "dark" ? "bg-purple-500" : "bg-blue-400"
+        }`} />
+        <div className={`absolute bottom-0 right-0 w-48 h-48 rounded-full blur-3xl opacity-10 ${
+          theme === "dark" ? "bg-pink-500" : "bg-purple-400"
+        }`} />
+      </div>
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            {/* Main Footer Content */}
       <div className="flex flex-col lg:flex-row items-center justify-between gap-8 mb-8">
         {/* Brand Section */}
         <div className="text-center lg:text-left">
@@ -142,7 +153,7 @@ export default function Footer() {
             </a>
           ))}
         </div>
-
+        </div>
         {/* Additional Links */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 py-6 border-t border-gray-200 dark:border-gray-700">
           <div className="flex flex-wrap justify-center gap-6">

@@ -9,6 +9,7 @@ const inter = Inter({
   weight: ["400", "500", "600"],
 });
 
+
 export default function ContactForm() {
   const { theme } = useTheme();
   const [name, setName] = useState("");
