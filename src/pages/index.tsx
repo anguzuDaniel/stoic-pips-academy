@@ -9,7 +9,6 @@ import OurServices from "@/app/components/services/OurServices";
 import AboutSection from "@/app/components/AboutSection";
 import TestimonialsSection from "@/app/components/testimonials/TestimonialsSection";
 import RootLayout from "@/app/layout";
-
 export default function Home() {
   return (
     <RootLayout>

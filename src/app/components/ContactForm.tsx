@@ -1,17 +1,10 @@
-"use client";
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
-import { Inter } from "next/font/google";
-
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-});
-
+import { inter } from "./layout";
 
 export default function ContactForm() {
-  const { theme } = useTheme();
+  const { theme, systemTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -20,28 +13,35 @@ export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"success" | "error" | null>(null);
 
-  const currentTheme = theme || 'light';
+  // Fix hydration by waiting for component to mount
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null; // simpler than showing skeletons
+
+  const currentTheme = theme === 'system' ? systemTheme : theme || 'light';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus(null);
 
-    const formData = {
-      name,
-      email,
-      phone,
-      service,
-      message,
-    };
-
     try {
-      const response = await fetch("/api/send-email", {
+      const response = await fetch("https://formspree.io/f/meorkqzl", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          name,
+          email,
+          phone,
+          service,
+          message,
+          _subject: `New Contact: ${name} - ${service || 'General Inquiry'}`,
+          _replyto: email,
+        }),
       });
 
       if (response.ok) {
@@ -76,7 +76,7 @@ export default function ContactForm() {
     currentTheme === "dark"
       ? "bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
       : "bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
-  } ${isSubmitting ? "opacity-50 cursor-not-allowed" : "hover:scale-105"} ${inter.className}`;
+  } hover:scale-105 ${inter.className}`;
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
@@ -115,7 +115,6 @@ export default function ContactForm() {
             className={inputClasses}
             placeholder="John Doe"
             required
-            disabled={isSubmitting}
           />
         </div>
 
@@ -132,7 +131,6 @@ export default function ContactForm() {
             className={inputClasses}
             placeholder="john@example.com"
             required
-            disabled={isSubmitting}
           />
         </div>
       </div>
@@ -150,7 +148,6 @@ export default function ContactForm() {
             onChange={(e) => setPhone(e.target.value)}
             className={inputClasses}
             placeholder="+256 712 345 678"
-            disabled={isSubmitting}
           />
         </div>
 
@@ -164,7 +161,6 @@ export default function ContactForm() {
             value={service}
             onChange={(e) => setService(e.target.value)}
             className={inputClasses}
-            disabled={isSubmitting}
           >
             <option value="">Select a service</option>
             <option value="Mentorship Program">Mentorship Program</option>
@@ -185,16 +181,14 @@ export default function ContactForm() {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           rows={5}
-          className={`${inputClasses} resize-none`} // Add resize-none here
+          className={`${inputClasses} resize-none`}
           placeholder="Tell us about your trading goals and how we can help you..."
           required
-          disabled={isSubmitting}
         />
       </div>
 
       <button
         type="submit"
-        disabled={isSubmitting}
         className={buttonClasses}
       >
         {isSubmitting ? (
