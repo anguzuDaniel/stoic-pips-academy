@@ -8,8 +8,22 @@ import Hero from "@/app/components/Hero";
 import OurServices from "@/app/components/services/OurServices";
 import AboutSection from "@/app/components/AboutSection";
 import TestimonialsSection from "@/app/components/testimonials/TestimonialsSection";
-import RootLayout from "@/app/layout";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
+
 export default function Home() {
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    console.log("Home page mounted - Theme:", theme);
+  }, [theme]);
+
+  if (!mounted) {
+    return <div>Loading...</div>;
+  }
+
   return (
       <Layout>
         <Hero />
