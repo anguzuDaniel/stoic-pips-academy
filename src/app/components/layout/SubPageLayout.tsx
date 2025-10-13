@@ -9,8 +9,7 @@ import { Providers } from "../provider/providers";
 
 export default function SubPageLayout({ children }: LayoutProps) {
   return (
-    <html suppressHydrationWarning>
-      <body>
+      <Providers>
         <PageWrapper>
             <main className="flex-grow">
               {children}
@@ -18,7 +17,6 @@ export default function SubPageLayout({ children }: LayoutProps) {
 
             <Footer />
         </PageWrapper>
-      </body>
-    </html>
+      </Providers>
   );
 }
