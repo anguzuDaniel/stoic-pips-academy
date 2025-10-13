@@ -11,7 +11,6 @@ import TestimonialsSection from "@/app/components/testimonials/TestimonialsSecti
 import RootLayout from "@/app/layout";
 export default function Home() {
   return (
-    <RootLayout>
       <Layout>
         <Hero />
 
@@ -29,6 +28,5 @@ export default function Home() {
 
         <ContactCTA />
       </Layout>
-    </RootLayout>
   );
 }
