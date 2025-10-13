@@ -10,6 +10,7 @@ import AboutSection from "@/app/components/AboutSection";
 import TestimonialsSection from "@/app/components/testimonials/TestimonialsSection";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import RootLayout from "@/app/layout";
 
 export default function Home() {
   const { theme, setTheme } = useTheme();
@@ -25,22 +26,22 @@ export default function Home() {
   }
 
   return (
-      <Layout>
-        <Hero />
+    <Layout>
+      <Hero />
 
-        <AboutSection />
+      <AboutSection />
 
-        <OurServices />
+      <OurServices />
 
-        <PricingServices />
+      <PricingServices />
 
-        <RecommendedBrokers />
+      <RecommendedBrokers />
 
-        <TestimonialsSection />
+      <TestimonialsSection />
 
-        <FAQ />
+      <FAQ />
 
-        <ContactCTA />
-      </Layout>
+      <ContactCTA />
+    </Layout>
   );
 }
