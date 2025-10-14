@@ -49,6 +49,7 @@ export default function GetStartedPage({
 
   useEffect(() => {
     setMounted(true);
+    console.log("Get Started page mounted - Theme:", theme);
   }, []);
 
   if (!mounted) return null;
@@ -370,7 +371,6 @@ export default function GetStartedPage({
               </div>
             </div>
 
-            {/* Right Side - Service Details */}
             <ServiceDetails
               title={safeTitle} 
               description={safeDescription} 
