@@ -10,7 +10,7 @@ import AboutSection from "@/app/components/AboutSection";
 import TestimonialsSection from "@/app/components/testimonials/TestimonialsSection";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-import RootLayout from "@/app/layout";
+import NewsletterSection from "@/app/components/NewsletterSection";
 
 export default function Home() {
   const { theme, setTheme } = useTheme();
@@ -42,6 +42,8 @@ export default function Home() {
       <FAQ />
 
       <ContactCTA />
+
+      <NewsletterSection />
     </Layout>
   );
 }
