@@ -203,7 +203,7 @@ export default function NewsletterSection() {
                         <span>Subscribing...</span>
                       </div>
                     ) : (
-                      "Join Free Newsletter"
+                      "Join Our Free Newsletter"
                     )}
                   </button>
                   <p className={`text-xs text-center ${inter.className} ${

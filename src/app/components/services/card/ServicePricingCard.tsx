@@ -31,7 +31,7 @@ export default function ServiceCard({ service, isHovered, onHover, theme }: Serv
     <div
       className={`
         relative group transition-all duration-500 ease-out flex-shrink-0
-        w-80 md:w-96 lg:w-[400px] mx-4
+        w-80 md:w-60 lg:w-[400px] mx-4
         ${isHovered ? 'scale-105 z-10' : 'scale-100'}
         rounded-3xl overflow-hidden
         ${theme === "dark"

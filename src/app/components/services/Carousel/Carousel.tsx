@@ -31,7 +31,7 @@ export default function SimpleCarousel({ children, className = '' }: SimpleCarou
                  rounded-full w-12 h-12 flex items-center justify-center 
                  shadow-lg border border-gray-200 dark:border-gray-600
                  hover:scale-110 transition-all duration-300
-                 -ml-6"
+                 ml-1"
       >
         ←
       </button>
@@ -39,7 +39,7 @@ export default function SimpleCarousel({ children, className = '' }: SimpleCarou
       {/* Scroll Container - Reduced spacing */}
       <div
         ref={scrollContainerRef}
-        className="flex overflow-x-auto space-x-3 py-8 px-12 scrollbar-hide"        
+        className="flex overflow-x-auto space-x-3 py-8 px-6 scrollbar-hide"        
         style={{ 
           scrollbarWidth: 'none', 
           msOverflowStyle: 'none'
@@ -56,7 +56,7 @@ export default function SimpleCarousel({ children, className = '' }: SimpleCarou
                  rounded-full w-12 h-12 flex items-center justify-center 
                  shadow-lg border border-gray-200 dark:border-gray-600
                  hover:scale-110 transition-all duration-300
-                 -mr-6"
+                 mr-1"
       >
         →
       </button>
