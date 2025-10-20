@@ -50,7 +50,7 @@ https://formspree.io/f/meorkqzl
 `POST` (JSON)
 
 ### Example Request
-```json
+json
 {
   "name": "John Doe",
   "email": "john@example.com",
