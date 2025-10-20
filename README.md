@@ -50,7 +50,7 @@ https://formspree.io/f/meorkqzl
 `POST` (JSON)
 
 ### Example Request
-json
+`json
 {
   "name": "John Doe",
   "email": "john@example.com",
@@ -59,7 +59,7 @@ json
   "message": "I'm interested in joining the next cohort.",
   "_subject": "New Contact: John Doe - Mentorship Program",
   "_replyto": "john@example.com"
-}
+}`
 
 ### Success Response
 
