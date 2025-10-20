@@ -1,37 +1,183 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🧭 Stoic Pips Mentorship
 
-## Getting Started
+**Stoic Pips Mentorship** is a modern, responsive website built to showcase the **Stoic Pips Trading Mentorship Program**, offering trading education and guidance in synthetic indices and forex markets.  
 
-First, run the development server:
+The site is designed to inform, engage, and convert visitors into leads using **Formspree** for contact submissions and **ImprovX** for official support.
 
-```bash
+
+## ⚙️ Tech Stack
+
+| Layer | Tool / Library | Purpose |
+|-------|----------------|----------|
+| **Framework** | [Next.js 14+](https://nextjs.org/) | App routing, React rendering, and optimization |
+| **Styling** | [Tailwind CSS](https://tailwindcss.com/) | Utility-first styling for responsive design |
+| **Theme Management** | [next-themes](https://github.com/pacocoursey/next-themes) | Handles light/dark/system themes |
+| **Forms & Email** | [Formspree](https://formspree.io/f/meorkqzl) | Manages contact form submissions without a backend |
+| **Support Email** | [ImprovX](https://improvx.ai) | Manages customer communication via `support@stoicpips.com` |
+| **Font** | [Geist Sans](https://vercel.com/font) | Clean and modern typography |
+| **Hosting (recommended)** | [Vercel](https://vercel.com/) | Seamless deployment for Next.js apps |
+
+
+## 🧩 Website Structure
+
+| Section | Description |
+|----------|--------------|
+| **Hero Section** | Engaging headline introducing the mentorship with a CTA button |
+| **About** | Overview of Stoic Pips’ mission and trading philosophy |
+| **Services** | Details on mentorship, courses, and broker guidance |
+| **Brokers** | Partner brokers with affiliate links |
+| **Testimonials** | Student success stories and feedback |
+| **FAQ** | Common questions about mentorship and enrollment |
+| **Contact Form** | Integrated with Formspree for message submissions |
+
+## 📨 Contact Form Integration
+
+### Endpoint
+
+https://formspree.io/f/meorkqzl
+
+### Method
+`POST` (JSON)
+
+### Example Request
+```json
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "phone": "+256712345678",
+  "service": "Mentorship Program",
+  "message": "I'm interested in joining the next cohort.",
+  "_subject": "New Contact: John Doe - Mentorship Program",
+  "_replyto": "john@example.com"
+}
+
+Success Response
+
+✅ Displays: “Thank you! Your message has been sent successfully.”
+
+Error Response
+
+❌ Displays: “There was an error sending your message. Please try again or email us directly.”
+
+Fallback Support
+
+If Formspree fails, users can email: support@stoicpips.com (handled via ImprovX)
+
+
+🧱 File Structure
+
+stoic-pips/
+│
+├── app/
+│   ├── layout.tsx        # Root layout with ThemeProvider and font
+│   ├── page.tsx          # Main landing page
+│   ├── components/
+│   │   ├── Navbar.tsx
+│   │   ├── Hero.tsx
+│   │   ├── About.tsx
+│   │   ├── Services.tsx
+│   │   ├── Brokers.tsx
+│   │   ├── Testimonials.tsx
+│   │   ├── FAQ.tsx
+│   │   ├── ContactForm.tsx
+│   │   └── Footer.tsx
+│   └── styles/           # Global styles
+│
+├── public/
+│   ├── logo.svg
+│   ├── favicon.ico
+│   └── images/
+│
+├── package.json
+├── tailwind.config.js
+├── postcss.config.js
+└── README.md
+
+
+🧰 Installation & Setup
+
+1️⃣ Clone Repository
+
+git clone https://github.com/anguzuDaniel/stoic-pips.git
+cd stoic-pips
+
+2️⃣ Install Dependencies
+
+npm install
+
+3️⃣ Run Development Server
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+4️⃣ Build for Production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+npm run build
+npm start
 
-## Learn More
+5️⃣ Deploy to Vercel
 
-To learn more about Next.js, take a look at the following resources:
+vercel
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+🎨 Theming Logic
 
-## Deploy on Vercel
+Automatically detects system theme (dark or light)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+User can manually toggle
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# stoic-pips-academy
+Uses next-themes with hydration-safe mounting
+
+
+Example:
+
+const { theme, systemTheme, setTheme } = useTheme();
+const currentTheme = theme === "system" ? systemTheme : theme;
+
+
+💬 Support & Communication
+
+Type	Channel
+
+General Support	support@stoicpips.com (via ImprovX)
+Mentorship Inquiries	Through website contact form
+Partnership Requests	Directly via support email
+
+
+🧠 Developer Notes
+
+No backend logic required (Formspree handles it)
+
+Hydration issues can occur if useTheme() runs before mount — always guard rendering with mounted check
+
+Node.js 18+ recommended
+
+Do not expose Formspree endpoint in public repos without spam protection
+
+
+🔒 Security & Privacy
+
+All form submissions use HTTPS via Formspree
+
+No user data stored locally or in cookies
+
+No analytics/tracking unless added manually
+
+
+🚀 Future Improvements
+
+Add animated success modal for form submissions
+
+Connect form data to CRM (Notion, Airtable, Google Sheets)
+
+Dynamically load testimonials from CMS
+
+Integrate Calendly for mentorship booking
+
+
+© Stoic Pips Mentorship — All Rights Reserved
+
+
+Would you like me to make a **version with badges** (Next.js, Tailwind, Vercel, etc.) at the top of your README for a more professional GitHub look?
+
