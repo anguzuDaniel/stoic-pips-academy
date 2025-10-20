@@ -61,15 +61,15 @@ https://formspree.io/f/meorkqzl
   "_replyto": "john@example.com"
 }
 
-Success Response
+### Success Response
 
 ✅ Displays: “Thank you! Your message has been sent successfully.”
 
-Error Response
+### Error Response
 
 ❌ Displays: “There was an error sending your message. Please try again or email us directly.”
 
-Fallback Support
+### Fallback Support
 
 If Formspree fails, users can email: support@stoicpips.com (handled via ImprovX)
 
