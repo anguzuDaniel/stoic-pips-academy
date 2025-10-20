@@ -1,4 +1,3 @@
-```markdown
 # 🧭 Stoic Pips Mentorship
 
 A modern, responsive website showcasing the **Stoic Pips Trading Mentorship Program**, offering comprehensive trading education in synthetic indices and forex markets.
