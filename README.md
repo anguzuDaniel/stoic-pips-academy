@@ -39,7 +39,7 @@ https://formspree.io/f/meorkqzl
 ### Method
 `POST` (JSON)
 
-### Example Request
+## Example Request
 ```json
 {
   "name": "John Doe",
@@ -50,7 +50,7 @@ https://formspree.io/f/meorkqzl
   "_subject": "New Contact: John Doe - Mentorship Program",
   "_replyto": "john@example.com"
 }
-###
+##
 
 Success Response
 
